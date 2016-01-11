@@ -5,6 +5,16 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+
+# attach to main tmux session if we are in guake, but only if we are not already in tmux
+if [[ "$TERM" == "xterm-256color" && "$TMUX" == "" ]]; then
+	exec tmux a -t main
+fi
+# make a new tmux if we're in st (because st doesn't have a scrollback buffer)
+if [[ "$TERM" == "st-256color" &&  "$TMUX" == "" ]]; then
+	exec tmux
+fi
+
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoredups:ignorespace
@@ -106,7 +116,8 @@ mpv_quit() {
 #########################
 ## Paths and constants ##
 #########################
-export PATH="/home/j0sh/Dropbox/bin:~/.local/bin:$PATH:/opt/MATLAB/bin"
+source ~/Dropbox/.bashrc_private # stuff that doesn't belong on a public git
+export PATH="/home/j0sh/Dropbox/bin:~/.local/bin:/home/j0sh/.gem/ruby/2.2.0/bin:$PATH:/opt/MATLAB/bin"
 export EDITOR="nvim"
 export TEXINPUTS=".:/home/j0sh/Dropbox/code/LaTeX/sty:"
 # need this for tmux to use 256 colors
@@ -137,11 +148,3 @@ POWERLINE_ARROW=""
 PS1="${COLOR_USER}\u${COLOR_PATH}\W${COLOR_NONE}${COLOR_FG}${POWERLINE_ARROW}${COLOR_NONE} "
 PS1_static=$PS1
 PROMPT_COMMAND='PS1="${COLOR_BG}${COLOR_TIME}$(date +%I:%M%p)${PS1_static}"'
-
-
-# attach to main tmux session if we are in guake, but only if we are not already in tmux
-if [[ "$GIO_LAUNCHED_DESKTOP_FILE" == "/usr/share/applications/guake.desktop" && "$TMUX" == "" ]]; then
-	tmux a -t main
-fi
-
-
