@@ -77,6 +77,7 @@ alias drop_caches='echo 3 |sudo tee /proc/sys/vm/drop_caches'
 alias youtube-dl='youtube-dl -ci'
 alias ytdl='youtube-dl "$(xsel -ob)"'
 alias cr='cmus-remote'
+alias remove_other_tmux='for x in $(tmux ls|cut -f 1 -d :); do if [[ "$x" != "main" ]]; then tmux kill-session -t $x; fi; done'
 
 
 ###################
