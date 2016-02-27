@@ -51,7 +51,8 @@ for i in range(10):
 system_bus = dbus.SystemBus()
 battery_object = system_bus.get_object(dbus_upower_path, composite_battery_path)
 battery_properties_interface = dbus.Interface(battery_object, dbus_properties_path)
-battery_properties = battery_properties_interface.GetAll("")
+# battery_properties_interface = dbus.Interface(battery_object, dbus_upower_path)
+battery_properties = battery_properties_interface.GetAll("org.freedesktop.UPower.Device")
 battery_precent = int(battery_properties["Percentage"])
 battery_time = round(battery_properties["TimeToEmpty"] / 3600,1)
 

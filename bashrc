@@ -11,7 +11,7 @@ if [[ "$TERM" == "xterm-256color" && "$TMUX" == "" ]]; then
 	exec tmux a -t main
 fi
 # make a new tmux if we're in st (because st doesn't have a scrollback buffer)
-if [[ "$TERM" == "st-256color" &&  "$TMUX" == "" ]]; then
+if [[ "$TERM" == "st-256color" && ! -e "$TMUX" ]]; then
 	exec tmux
 fi
 
@@ -77,7 +77,15 @@ alias drop_caches='echo 3 |sudo tee /proc/sys/vm/drop_caches'
 alias youtube-dl='youtube-dl -ci'
 alias ytdl='youtube-dl "$(xsel -ob)"'
 alias cr='cmus-remote'
-alias remove_other_tmux='for x in $(tmux ls|cut -f 1 -d :); do if [[ "$x" != "main" ]]; then tmux kill-session -t $x; fi; done'
+remove_detached_tmux() {
+	# kills tmux sessions that are not attached and have only 1 window
+	IFS=$'\n'
+	for x in $(tmux ls |grep -v '(attached)'); do
+		if [[ "$(echo $x|cut -f 2 -d ' ')" == "1" ]]; then
+	        tmux kill-session -t "$(echo $x|cut -f 1 -d :)"
+	    fi
+	done
+}
 
 
 ###################
@@ -97,7 +105,7 @@ alias          fan_level_4='echo level 4          | sudo tee /proc/acpi/ibm/fan 
 alias          fan_level_7='echo level 7          | sudo tee /proc/acpi/ibm/fan # (maximum speed)'
 alias       fan_level_auto='echo level auto       | sudo tee /proc/acpi/ibm/fan # (automatic - default)'
 alias fan_level_disengaged='echo level disengaged | sudo tee /proc/acpi/ibm/fan # (disengaged)'
-alias build_server='ssh -X j0sh@build.tamu.edu'
+alias build_server='ssh -X j0sh@linux.cse.tamu.edu'
 alias build_server_fs='mkdir -p /tmp/build_server; sshfs j0sh@build.tamu.edu:/home/ugrads/j/j0sh /tmp/build_server'
 alias tamu_only_vpn='sudo openconnect connect.tamu.edu --authgroup tunnel_tamu_traffic --user=j0sh'
 mpv_get_time() {
@@ -118,7 +126,7 @@ mpv_quit() {
 ## Paths and constants ##
 #########################
 source ~/Dropbox/.bashrc_private # stuff that doesn't belong on a public git
-export PATH="/home/j0sh/Dropbox/bin:~/.local/bin:/home/j0sh/.gem/ruby/2.2.0/bin:$PATH:/opt/MATLAB/bin"
+export PATH="$HOME/Dropbox/bin:$HOME/.local/bin:$HOME/.npm-packages/bin:$HOME/.gem/ruby/2.2.0/bin:$PATH:/opt/MATLAB/bin"
 export EDITOR="nvim"
 export TEXINPUTS=".:/home/j0sh/Dropbox/code/LaTeX/sty:"
 # need this for tmux to use 256 colors
