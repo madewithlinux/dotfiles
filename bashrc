@@ -76,12 +76,17 @@ alias powertop='sudo powertop'
 alias drop_caches='echo 3 |sudo tee /proc/sys/vm/drop_caches'
 alias youtube-dl='youtube-dl -ci'
 alias ytdl='youtube-dl "$(xsel -ob)"'
+# not sure why jupyter doesn't work unless you specify the ip manually
+alias jnb='jupyter notebook --ip 127.0.0.1'
 alias cr='cmus-remote'
 remove_detached_tmux() {
 	# kills tmux sessions that are not attached and have only 1 window
 	IFS=$'\n'
+	# if it isn't attached
 	for x in $(tmux ls |grep -v '(attached)'); do
+		# if it only has 1 window
 		if [[ "$(echo $x|cut -f 2 -d ' ')" == "1" ]]; then
+			# tell tmux to kill it
 	        tmux kill-session -t "$(echo $x|cut -f 1 -d :)"
 	    fi
 	done

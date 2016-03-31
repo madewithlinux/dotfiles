@@ -5,7 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "Input:pixelsize=20:antialias=true:autohint=true";
+// static char font[] = "Input:pixelsize=20:antialias=true:autohint=true";
+static char font[] = "Ubuntu Mono:pixelsize=20:antialias=true:autohint=true";
 static int borderpx = 0;
 
 /*
