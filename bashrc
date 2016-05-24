@@ -38,7 +38,10 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 # tab-completion:
-source ~/Dropbox/.tmux.completion.bash.txt
+if [[ -f "$HOME/Dropbox/.tmux.completion.bash.txt" ]]; then
+	source "$HOME/Dropbox/.tmux.completion.bash.txt"
+fi
+	
 complete -cf sudo
 complete -cf man
 
@@ -55,6 +58,7 @@ alias df='df -h'
 alias du='du -hs'
 alias htop='htop -d 10'
 alias ncdu='ncdu -x'
+alias pstree='pstree -U'
 alias subl='subl3'
 alias mpv='/usr/bin/mpv --hwdec=auto --profile=pseudo-gui --save-position-on-quit --cache=3145728 --input-unix-socket=/tmp/mpvsocket --ytdl-format=bestvideo+bestaudio'
 alias ecryptfs='sudo mount -t ecryptfs -o ecryptfs_enable_filename_crypto=y,ecryptfs_cipher=aes,ecryptfs_key_bytes=32'
@@ -130,7 +134,9 @@ mpv_quit() {
 #########################
 ## Paths and constants ##
 #########################
-source ~/Dropbox/.bashrc_private # stuff that doesn't belong on a public git
+if [[ -f "$HOME/Dropbox/.bashrc_private" ]]; then
+	source "$HOME/Dropbox/.bashrc_private" # stuff that doesn't belong on a public git
+fi
 export PATH="$HOME/Dropbox/bin:$HOME/.local/bin:$HOME/.npm-packages/bin:$HOME/.gem/ruby/2.2.0/bin:$PATH:/opt/MATLAB/bin"
 export EDITOR="nvim"
 export TEXINPUTS=".:/home/j0sh/Dropbox/code/LaTeX/sty:"
