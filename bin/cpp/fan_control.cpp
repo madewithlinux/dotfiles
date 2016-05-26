@@ -13,7 +13,7 @@ constexpr const char *fan_socket_path = "/proc/acpi/ibm/fan";
 void print_help(const char *name) {
   cout << "Usage: " << name << " <level>" << endl;
   cout << "Valid levels are:" << endl;
-  cout << "0-7, auto, disengaged, full-speed" << endl;
+  cout << "0-7, auto, disengaged, full-speed, or i for info" << endl;
 }
 
 void set_fan_level(const string level) {
@@ -21,8 +21,17 @@ void set_fan_level(const string level) {
   output << "level " << level << endl;
 }
 
+void print_fan_info() {
+  std::ifstream input(fan_socket_path);
+  for (int i = 0; i < 3; ++i) {
+    string line;
+    std::getline(input, line);
+    cout << line << endl;
+  }
+}
+
 int main(int argc, char const *argv[]) {
-  if (argc < 1) {
+  if (argc < 2) {
     print_help(argv[0]);
     return 0;
   }
@@ -59,6 +68,9 @@ int main(int argc, char const *argv[]) {
       break;
     case 'f':
       set_fan_level("full-speed");
+      break;
+    case 'i':
+      print_fan_info();
       break;
     default:
       print_help(argv[0]);
