@@ -146,11 +146,13 @@ if [[ "$TERM" = "xterm" ]]; then
 	export TERM="xterm-256color"
 fi
 # allow us to set title in tmux
-if [[ "$TMUX" != "" ]]; then
-	title() {
+title() {
+	if [[ "$TMUX" != "" ]]; then
 		tmux set -g set-titles-string "$*"
-	}
-fi
+	else
+		echo -en "\033]0;${*}\a"
+	fi
+}
 
 
 ##################
