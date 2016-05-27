@@ -83,6 +83,7 @@ alias ytdl='youtube-dl "$(xsel -ob)"'
 # not sure why jupyter doesn't work unless you specify the ip manually
 alias jnb='jupyter notebook --ip 127.0.0.1'
 alias cr='cmus-remote'
+alias wtitle='tmux rename-window'
 remove_detached_tmux() {
 	# kills tmux sessions that are not attached and have only 1 window
 	IFS=$'\n'
