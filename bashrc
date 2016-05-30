@@ -16,7 +16,7 @@
 #fi
 
 # make the printPrtSc key into a menu key
-#xmodmap -e "keycode 107 = Menu"
+xmodmap -e "keycode 107 = Menu"
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
