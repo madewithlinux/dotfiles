@@ -7,13 +7,16 @@
 
 
 # attach to main tmux session if we are in guake, but only if we are not already in tmux
-if [[ "$TERM" == "xterm-256color" && "$TMUX" == "" ]]; then
-	exec tmux a -t main
-fi
+#if [[ "$TERM" == "xterm-256color" && "$TMUX" == "" ]]; then
+#	exec tmux a -t main
+#fi
 # make a new tmux if we're in st (because st doesn't have a scrollback buffer)
-if [[ "$TERM" == "st-256color" && ! -e "$TMUX" ]]; then
-	exec tmux
-fi
+#if [[ "$TERM" == "st-256color" && ! -e "$TMUX" ]]; then
+#	exec tmux
+#fi
+
+# make the printPrtSc key into a menu key
+#xmodmap -e "keycode 107 = Menu"
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
