@@ -5,7 +5,6 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-
 # attach to main tmux session if we are in guake, but only if we are not already in tmux
 #if [[ "$TERM" == "xterm-256color" && "$TMUX" == "" ]]; then
 #	exec tmux a -t main
@@ -14,9 +13,6 @@
 #if [[ "$TERM" == "st-256color" && ! -e "$TMUX" ]]; then
 #	exec tmux
 #fi
-
-# make the printPrtSc key into a menu key
-xmodmap -e "keycode 107 = Menu"
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -51,6 +47,13 @@ complete -cf man
 ############
 ## basics ##
 ############
+binary_exists() { 
+	[ -n "$(which $1)" ] && [ -x "$(which $1)" ] 
+	
+}
+file_exists() { 
+	[ -f "$1" ] 
+}
 alias grep='grep --color=auto'
 alias dstat='dstat -cdnmD sda,sdb,sdc,sdd,sde,sdf,sdg,sdh,sdi,sdj,sdk,sdl,sdm,sdl,sdo,sdp,sr0,mmcblk0p1'
 alias lsblk='lsblk --output NAME,MODEL,LABEL,SIZE,TYPE,FSTYPE,MOUNTPOINT,UUID'
@@ -62,7 +65,7 @@ alias du='du -hs'
 alias htop='htop -d 10'
 alias ncdu='ncdu -x'
 alias pstree='pstree -U'
-alias subl='subl3'
+binary_exists subl3 && alias subl='subl3'
 alias mpv='/usr/bin/mpv --hwdec=auto --profile=pseudo-gui --save-position-on-quit --cache=3145728 --input-unix-socket=/tmp/mpvsocket --ytdl-format=bestvideo+bestaudio'
 alias ecryptfs='sudo mount -t ecryptfs -o ecryptfs_enable_filename_crypto=y,ecryptfs_cipher=aes,ecryptfs_key_bytes=32'
 alias sensors='sensors -f'
@@ -138,9 +141,8 @@ mpv_quit() {
 #########################
 ## Paths and constants ##
 #########################
-if [[ -f "$HOME/Dropbox/.bashrc_private" ]]; then
-	source "$HOME/Dropbox/.bashrc_private" # stuff that doesn't belong on a public git
-fi
+file_exists "$HOME/Dropbox/.bashrc_private" && source "$HOME/Dropbox/.bashrc_private" # stuff that doesn't belong on a public git
+file_exists "$HOME/.bashrc_local" && source "$HOME/.bashrc_local" # system-specific stuff
 export PATH="$HOME/Dropbox/bin:$HOME/.local/bin:$HOME/.npm-packages/bin:$HOME/.gem/ruby/2.2.0/bin:$PATH:/opt/MATLAB/bin"
 export EDITOR="nvim"
 export TEXINPUTS=".:/home/j0sh/Dropbox/code/LaTeX/sty:"
@@ -156,6 +158,9 @@ title() {
 		echo -en "\033]0;${*}\a"
 	fi
 }
+# make the printPrtSc key into a menu key
+binary_exists xmodmap && xmodmap -e "keycode 107 = Menu"
+
 
 
 ##################
@@ -170,7 +175,8 @@ COLOR_TIME="\[\e[1;32m\]"
 COLOR_USER="\[\e[1;34m\]"
 COLOR_PATH="\[\e[1;35m\]"
 COLOR_NONE="\[\e[0m\]"
-POWERLINE_ARROW=""
+#POWERLINE_ARROW=""
+POWERLINE_ARROW=""
 PS1="${COLOR_USER}\u@\h${COLOR_PATH}\W${COLOR_NONE}${COLOR_FG}${POWERLINE_ARROW}${COLOR_NONE} "
 PS1_static=$PS1
 PROMPT_COMMAND='PS1="${COLOR_BG}${COLOR_TIME}$(date +%I:%M%p)${PS1_static}"'
