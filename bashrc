@@ -48,7 +48,7 @@ complete -cf man
 ## basics ##
 ############
 binary_exists() { 
-	[ -n "$(which $1)" ] && [ -x "$(which $1)" ] 
+	[ -n "$(which $1)" ]
 	
 }
 file_exists() { 
@@ -144,7 +144,7 @@ mpv_quit() {
 file_exists "$HOME/Dropbox/.bashrc_private" && source "$HOME/Dropbox/.bashrc_private" # stuff that doesn't belong on a public git
 file_exists "$HOME/.bashrc_local" && source "$HOME/.bashrc_local" # system-specific stuff
 export PATH="$HOME/Dropbox/bin:$HOME/.local/bin:$HOME/.npm-packages/bin:$HOME/.gem/ruby/2.2.0/bin:$PATH:/opt/MATLAB/bin"
-export EDITOR="nvim"
+export EDITOR="nano"
 export TEXINPUTS=".:/home/j0sh/Dropbox/code/LaTeX/sty:"
 # need this for tmux to use 256 colors
 if [[ "$TERM" = "xterm" ]]; then
