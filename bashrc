@@ -159,7 +159,7 @@ title() {
 	fi
 }
 # make the printPrtSc key into a menu key
-binary_exists xmodmap && xmodmap -e "keycode 107 = Menu"
+binary_exists xmodmap && xmodmap -e "keycode 107 = Menu NoSymbol Menu"
 
 
 
