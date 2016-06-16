@@ -48,8 +48,7 @@ complete -cf man
 ## basics ##
 ############
 binary_exists() { 
-	[ -n "$(which $1)" ]
-	
+	[ -n "$(which $1 2>/dev/null)" ]
 }
 file_exists() { 
 	[ -f "$1" ] 
