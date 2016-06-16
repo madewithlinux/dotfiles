@@ -30,7 +30,7 @@ for item in $selection; do
                 ;;
             ["A|a"])
                 echo "appending to ${ITEM_PATHS[$item]}"
-                curl "${ITEM_URLS[$item]}" >> "${ITEM_PATHS[$item]}"
+                wget -O - "${ITEM_URLS[$item]}" >> "${ITEM_PATHS[$item]}"
                 continue
                 ;;
             ["S|s"])
@@ -38,6 +38,6 @@ for item in $selection; do
                 ;;
         esac
     fi
-    curl "${ITEM_URLS[$item]}" > "${ITEM_PATHS[$item]}"
+    wget -O - "${ITEM_URLS[$item]}" > "${ITEM_PATHS[$item]}"
 done
 
