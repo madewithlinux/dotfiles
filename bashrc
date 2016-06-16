@@ -171,7 +171,11 @@ binary_exists xmodmap && xmodmap -e "keycode 107 = Menu NoSymbol Menu"
 COLOR_BG="\[\e[48;5;237m\]"
 COLOR_FG="\[\e[38;5;237m\]"
 COLOR_TIME="\[\e[1;32m\]"
-COLOR_USER="\[\e[1;34m\]"
+if [[ "$USER" == "root" ]]; then
+	COLOR_USER="\[\e[1;31m\]"
+else
+	COLOR_USER="\[\e[1;34m\]"
+fi
 COLOR_PATH="\[\e[1;35m\]"
 COLOR_NONE="\[\e[0m\]"
 #POWERLINE_ARROW=""
