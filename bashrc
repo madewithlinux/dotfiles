@@ -168,6 +168,7 @@ binary_exists xmodmap && [[ -n "$DISPLAY" ]] && xmodmap -e "keycode 107 = Menu N
 # the actual powerline script causes tiny but noticeable lag for me
 # must wrap escape colors inside \[\] or else the current line doesn't wrap to the next one correctly
 # (because terminals are weird)
+COLOR_RED_BOLD="\[\e[1;33m\]"
 COLOR_BG="\[\e[48;5;237m\]"
 COLOR_FG="\[\e[38;5;237m\]"
 COLOR_TIME="\[\e[1;32m\]"
@@ -180,6 +181,6 @@ COLOR_PATH="\[\e[1;35m\]"
 COLOR_NONE="\[\e[0m\]"
 #POWERLINE_ARROW=""
 POWERLINE_ARROW=""
-PS1="${COLOR_USER}\u@\h${COLOR_PATH}\W${COLOR_NONE}${COLOR_FG}${POWERLINE_ARROW}${COLOR_NONE} "
+PS1="${COLOR_USER}\u${COLOR_RED_BOLD}@${COLOR_USER}\h${COLOR_PATH}\W${COLOR_NONE}${COLOR_FG}${POWERLINE_ARROW}${COLOR_NONE} "
 PS1_static=$PS1
 PROMPT_COMMAND='PS1="${COLOR_BG}${COLOR_TIME}$(date +%I:%M%p)${PS1_static}"'
