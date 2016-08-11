@@ -19,11 +19,11 @@ processLines :: String -> String
 processLines s = header ++ "\n" ++ outputLines
     where
         inputLines  = lines s
-        maxlen      = maximum $ map length inputLines
+        maxlen      = maximum $ map (length . show) inputLines
         outputLines = unlines $ map (processLine maxlen) inputLines
 
 processLine :: Int -> FilePath -> String
 processLine l s = move ++ show s ++ padding ++ fileNamePrefix ++ show (takeFileName s)
     where
-        padLength = l - length s + 1
+        padLength = 1 + l - (length . show $ s)
         padding   = replicate padLength ' '
