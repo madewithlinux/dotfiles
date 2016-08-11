@@ -20,6 +20,7 @@ xfsettingsd &
 clipit &
 dropbox &
 nm-applet &
+# wicd-gtk -t &
 xfce4-power-manager &
 # xautolock -time 10 -lockaftersleep -locker "/home/j0sh/Dropbox/bin/lock_screen_with_i3lock.sh" &
 # xss-lock -- "/home/j0sh/Dropbox/bin/lock_screen_with_i3lock.sh" &
