@@ -9,6 +9,7 @@
 // static char font[] = "Ubuntu Mono:pixelsize=20:antialias=true:autohint=true";
 static char font[] = "Inconsolata:pixelsize=20:antialias=true:autohint=true";
 static int borderpx = 0;
+#define histsize 32768
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -163,6 +164,12 @@ static MouseShortcut mshortcuts[] = {
 	{ Button5,              XK_ANY_MOD,     "\005" },
 };
 
+static MouseKey mkeys[] = {
+	/* button               mask            function        argument */
+	{ Button4,              0,              kscrollup,      {.i =  3} },
+	{ Button5,              0,              kscrolldown,    {.i =  3} },
+};
+
 /* Internal keyboard shortcuts. */
 #define MODKEY Mod1Mask
 
@@ -180,6 +187,8 @@ static Shortcut shortcuts[] = {
 	{ ControlMask|ShiftMask, XK_C,           clipcopy,       {.i =  0} },
 	{ ControlMask|ShiftMask, XK_V,           clippaste,      {.i =  0} },
 	{ MODKEY,                XK_Num_Lock,    numlock,        {.i =  0} },
+	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
+	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 };
 
 /*

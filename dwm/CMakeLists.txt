@@ -13,7 +13,9 @@ set(SOURCE_FILES
     dwm.c
     transient.c
     util.c
-    util.h)
+    util.h
+    movestack.c
+)
 
 add_executable(dwm ${SOURCE_FILES})
 
