@@ -10,6 +10,24 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+-- battery monitor
+bashets = require("bashets")
+
+-- battery monitor
+status_display = wibox.widget.textbox()
+bashets.register(
+  "/home/j0sh/Dropbox/bin/awesome_status_display.py", 
+  -- "/usr/share/awesome/bashets/battery.sh", 
+  {
+  -- widget = status_display, separator = " ", update_time=1
+                    widget = status_display,
+                    update_time = 1, 
+                    -- external = true,
+                    separator = " ",
+                    format = "$1" 
+                })
+-- status_display = wibox.widget.textbox()
+-- bashets.register(status_display, "/home/j0sh/Dropbox/bin/awesome_status_display.py", " $1", 3)
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -191,6 +209,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(status_display)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -583,3 +602,5 @@ globalkeys = awful.util.table.join(
         local cmenu = awful.menu.clients({width=400}, {keygrabber=true, coords={x=0, y=10}})
     end),
    awful.key({modkey}, "d", xrandr))
+
+

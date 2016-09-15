@@ -27,5 +27,17 @@ xfce4-power-manager &
 
 # exec openbox-session
 # exec xfce4-session
-exec awesome
 # exec gnome-session
+
+#exec awesome
+
+# dwm specific stuff
+# status bar refreshing
+(while true; do xsetroot -name "$(/home/j0sh/Dropbox/dotfiles/dwm/dwm_status_display.py)"; sleep 1; done) &
+# restart for recompiling
+while true; do
+    # Log stderror to a file 
+    /home/j0sh/Dropbox/dotfiles/dwm/dwm 2> ~/.dwm.log
+    # No error logging
+    #/home/j0sh/Dropbox/dotfiles/dwm/dwm >/dev/null 2>&1
+done
