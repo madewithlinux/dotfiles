@@ -7,7 +7,7 @@
  */
 // static char font[] = "Input:pixelsize=20:antialias=true:autohint=true";
 // static char font[] = "Ubuntu Mono:pixelsize=20:antialias=true:autohint=true";
-static char font[] = "Inconsolata:pixelsize=20:antialias=true:autohint=true";
+static char font[] = "Inconsolata:pixelsize=17:antialias=true:autohint=true";
 static int borderpx = 0;
 #define histsize 32768
 
@@ -66,7 +66,7 @@ static unsigned int cursorthickness = 1;
 static int bellvolume = 0;
 
 /* default TERM value */
-static char termname[] = "st-256color";
+static char termname[] = "xterm-256color";
 
 static unsigned int tabspaces = 8;
 
@@ -145,7 +145,7 @@ static unsigned int defaultrcs = 257;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 6;
+static unsigned int cursorshape = 2;
 
 /*
  * Default colour and shape of the mouse cursor

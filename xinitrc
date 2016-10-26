@@ -6,12 +6,6 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
     unset f
 fi
 
-# twm &
-# xclock -geometry 50x50-1+1 &
-# xterm -geometry 80x50+494+51 &
-# xterm -geometry 80x20+494-0 &
-# exec xterm -geometry 80x66+0+0 -name login
-
 ## some applications that should be run in the background
 # xscreensaver &
 # xsetroot -cursor_name left_ptr &
@@ -22,22 +16,26 @@ dropbox &
 nm-applet &
 # wicd-gtk -t &
 xfce4-power-manager &
+feh --bg-scale /home/j0sh/Dropbox/wallpaper.png
+# disable touch pad inertial scroll
+xinput --set-prop --type=float "SynPS/2 Synaptics TouchPad" "Synaptics Coasting Speed" 0 0
 # xautolock -time 10 -lockaftersleep -locker "/home/j0sh/Dropbox/bin/lock_screen_with_i3lock.sh" &
 # xss-lock -- "/home/j0sh/Dropbox/bin/lock_screen_with_i3lock.sh" &
 
-# exec openbox-session
-# exec xfce4-session
-# exec gnome-session
-
-#exec awesome
+exec awesome 2>.awesome.log
+#exec i3 2>.i3log
+exit
 
 # dwm specific stuff
 # status bar refreshing
-(while true; do xsetroot -name "$(/home/j0sh/Dropbox/dotfiles/dwm/dwm_status_display.py)"; sleep 1; done) &
-# restart for recompiling
-while true; do
-    # Log stderror to a file 
-    /home/j0sh/Dropbox/dotfiles/dwm/dwm 2> ~/.dwm.log
-    # No error logging
-    #/home/j0sh/Dropbox/dotfiles/dwm/dwm >/dev/null 2>&1
-done
+# (while true; do xsetroot -name "$(/home/j0sh/Dropbox/dotfiles/dwm/dwm_status_display.py)"; sleep 0.016s; done) &
+# /home/j0sh/Dropbox/dotfiles/dwm/dwm_status_display.py &
+# wmname LG3D
+# export __GL_SYNC_TO_VBLANK=1
+# # restart for recompiling
+# while true; do
+#     # Log stderror to a file 
+#     /home/j0sh/Dropbox/dotfiles/dwm/dwm 2> ~/.dwm.log
+#     # No error logging
+#     #/home/j0sh/Dropbox/dotfiles/dwm/dwm >/dev/null 2>&1
+# done
