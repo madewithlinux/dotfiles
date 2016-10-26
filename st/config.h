@@ -79,49 +79,56 @@ static unsigned int tabspaces = 8;
 
 
 /*ref: https://terminal.sexy/ */
-/* Terminal colors (16 first used in escape sequence) */
+// /* monokai */
+// static const char *colorname[] = {
+//   [0] = "#272822", /* black   */
+//   [1] = "#f92672", /* red     */
+//   [2] = "#a6e22e", /* green   */
+//   [3] = "#f4bf75", /* yellow  */
+//   [4] = "#66d9ef", /* blue    */
+//   [5] = "#ae81ff", /* magenta */
+//   [6] = "#a1efe4", /* cyan    */
+//   [7] = "#f8f8f2", /* white   */
+//   [8]  = "#75715e", /* black   */
+//   [9]  = "#f92672", /* red     */
+//   [10] = "#a6e22e", /* green   */
+//   [11] = "#f4bf75", /* yellow  */
+//   [12] = "#66d9ef", /* blue    */
+//   [13] = "#ae81ff", /* magenta */
+//   [14] = "#a1efe4", /* cyan    */
+//   [15] = "#f9f8f5", /* white   */
+//   [256] = "#272822", /* background */
+//   [257] = "#f8f8f2", /* foreground */
+// };
+// static unsigned int defaultfg = 257;
+// static unsigned int defaultbg = 256;
+// static unsigned int defaultcs = 257;
+// static unsigned int defaultitalic = 7;
+// static unsigned int defaultunderline = 7;
+/* spacegray */
 static const char *colorname[] = {
-
-  /* 8 normal colors */
-  [0] = "#002b36", /* black   */
-  [1] = "#dc322f", /* red     */
-  [2] = "#859900", /* green   */
-  [3] = "#b58900", /* yellow  */
-  [4] = "#268bd2", /* blue    */
-  [5] = "#6c71c4", /* magenta */
-  [6] = "#2aa198", /* cyan    */
-  // [7] = "#93a1a1", /* white   */
-  [7] = "#ffffff", /* white   */
-
-  /* 8 bright colors */
-  [8]  = "#657b83", /* black   */
-  [9]  = "#dc322f", /* red     */
-  [10] = "#859900", /* green   */
-  [11] = "#b58900", /* yellow  */
-  [12] = "#268bd2", /* blue    */
-  [13] = "#6c71c4", /* magenta */
-  [14] = "#2aa198", /* cyan    */
-  [15] = "#fdf6e3", /* white   */
-
-  /* special colors */
-  [256] = "#002b36", /* background */
-  // [257] = "#93a1a1", /* foreground */
-  [257] = "#ffffff", /* foreground */
+  [0] = "#272e36", /* black   */
+  [1] = "#b24a56", /* red     */
+  [2] = "#95D80A", /* green   */
+  [3] = "#c6735a", /* yellow  */
+  [4] = "#7c8fa5", /* blue    */
+  [5] = "#a5789e", /* magenta */
+  [6] = "#80cdcb", /* cyan    */
+  [7] = "#F8F8F8", /* white   */
+  [8]  = "#555555", /* black   */
+  [9]  = "#ff5555", /* red     */
+  [10] = "#55ff55", /* green   */
+  [11] = "#ffff55", /* yellow  */
+  [12] = "#5555ff", /* blue    */
+  [13] = "#ff55ff", /* magenta */
+  [14] = "#55ffff", /* cyan    */
+  [15] = "#ffffff", /* white   */
+  [256] = "#1A1E24", /* background */
+  [257] = "#F8F8F8", /* foreground */
 };
-
-/*
- * Default colors (colorname index)
- * foreground, background, cursor
- */
 static unsigned int defaultfg = 257;
 static unsigned int defaultbg = 256;
 static unsigned int defaultcs = 257;
-
-/*
- * Colors used, when the specific fg == defaultfg. So in reverse mode this
- * will reverse too. Another logic would only make the simple feature too
- * complex.
- */
 static unsigned int defaultitalic = 7;
 static unsigned int defaultunderline = 7;
 
