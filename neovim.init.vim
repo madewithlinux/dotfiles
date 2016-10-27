@@ -1,5 +1,6 @@
 set relativenumber
 set number
+set autochdir
 hi Visual ctermbg=8
 augroup myvimrc
     au!
