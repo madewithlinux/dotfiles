@@ -4,7 +4,7 @@ set autochdir
 hi Visual ctermbg=8
 augroup myvimrc
     au!
-    au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+    au BufWritePost .neovim.init.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
 "set tabstop=4
@@ -37,6 +37,10 @@ Plug 'rdnetto/YCM-Generator'
 Plug 'lervag/vimtex'
 Plug 'Rename'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'airblade/vim-gitgutter'
+Plug 'KabbAmine/vCoolor.vim'
+Plug 'haya14busa/incsearch.vim'
+Plug 'pelodelfuego/vim-swoop'
 call plug#end()
 
 " syntastic
