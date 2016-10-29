@@ -5,11 +5,9 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-// static char font[] = "Input:pixelsize=20:antialias=true:autohint=true";
-// static char font[] = "Ubuntu Mono:pixelsize=20:antialias=true:autohint=true";
-static char font[] = "Inconsolata:pixelsize=17:antialias=true:autohint=true";
-static int borderpx = 0;
-#define histsize 32768
+static char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+static int borderpx = 2;
+#define histsize 2000
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -19,7 +17,7 @@ static int borderpx = 0;
  * 4: value of shell in /etc/passwd
  * 5: value of shell in config.h
  */
-static char shell[] = "/bin/bash";
+static char shell[] = "/bin/sh";
 static char *utmp = NULL;
 static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
@@ -35,7 +33,7 @@ static float chscale = 1.0;
  *
  * More advanced example: " `'\"()[]{}"
  */
-static char worddelimiters[] = " `'\"()[]{}";
+static char worddelimiters[] = " ";
 
 /* selection timeouts (in milliseconds) */
 static unsigned int doubleclicktimeout = 300;
@@ -57,7 +55,7 @@ static unsigned int blinktimeout = 800;
 /*
  * thickness of underline and bar cursors
  */
-static unsigned int cursorthickness = 1;
+static unsigned int cursorthickness = 2;
 
 /*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
@@ -66,83 +64,47 @@ static unsigned int cursorthickness = 1;
 static int bellvolume = 0;
 
 /* default TERM value */
-static char termname[] = "xterm-256color";
+static char termname[] = "st-256color";
 
 static unsigned int tabspaces = 8;
 
-
-
-
-
-
-
-
-
-/*ref: https://terminal.sexy/ */
-// /* monokai */
-// static const char *colorname[] = {
-//   [0] = "#272822", /* black   */
-//   [1] = "#f92672", /* red     */
-//   [2] = "#a6e22e", /* green   */
-//   [3] = "#f4bf75", /* yellow  */
-//   [4] = "#66d9ef", /* blue    */
-//   [5] = "#ae81ff", /* magenta */
-//   [6] = "#a1efe4", /* cyan    */
-//   [7] = "#f8f8f2", /* white   */
-//   [8]  = "#75715e", /* black   */
-//   [9]  = "#f92672", /* red     */
-//   [10] = "#a6e22e", /* green   */
-//   [11] = "#f4bf75", /* yellow  */
-//   [12] = "#66d9ef", /* blue    */
-//   [13] = "#ae81ff", /* magenta */
-//   [14] = "#a1efe4", /* cyan    */
-//   [15] = "#f9f8f5", /* white   */
-//   [256] = "#272822", /* background */
-//   [257] = "#f8f8f2", /* foreground */
-// };
-// static unsigned int defaultfg = 257;
-// static unsigned int defaultbg = 256;
-// static unsigned int defaultcs = 257;
-// static unsigned int defaultitalic = 7;
-// static unsigned int defaultunderline = 7;
-/* spacegray */
+/* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-  [0]   = "#272e36", /* black   */
-  [1]   = "#b24a56", /* red     */
-  [2]   = "#95D80A", /* green   */
-  [3]   = "#c6735a", /* yellow  */
-  [4]   = "#7c8fa5", /* blue    */
-  [5]   = "#a5789e", /* magenta */
-  [6]   = "#80cdcb", /* cyan    */
-  [7]   = "#F8F8F8", /* white   */
-  [8]   = "#555555", /* black   */
-  [9]   = "#ff5555", /* red     */
-  [10]  = "#50D850", /* green   */
-  [11]  = "#B58900", /* yellow  */
-  [12]  = "#8080FF", /* blue    */
-  [13]  = "#FF55FF", /* magenta */
-  [14]  = "#00CCCC", /* cyan    */
-  [15]  = "#ffffff", /* white   */
-  [256] = "#1A1E24", /* background */
-  [257] = "#F8F8F8", /* foreground */
+	/* 8 normal colors */
+	"black",
+	"red3",
+	"green3",
+	"yellow3",
+	"blue2",
+	"magenta3",
+	"cyan3",
+	"gray90",
+
+	/* 8 bright colors */
+	"gray50",
+	"red",
+	"green",
+	"yellow",
+	"#5c5cff",
+	"magenta",
+	"cyan",
+	"white",
+
+	[255] = 0,
+
+	/* more colors can be added after 255 to use with DefaultXX */
+	"#cccccc",
+	"#555555",
 };
-static unsigned int defaultfg = 257;
-static unsigned int defaultbg = 256;
-static unsigned int defaultcs = 257;
-static unsigned int defaultitalic = 7;
-static unsigned int defaultunderline = 7;
-
-
-
 
 
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
+ */
 static unsigned int defaultfg = 7;
 static unsigned int defaultbg = 0;
 static unsigned int defaultcs = 256;
-*/
 static unsigned int defaultrcs = 257;
 
 /*
@@ -162,38 +124,46 @@ static unsigned int mousefg = 7;
 static unsigned int mousebg = 0;
 
 /*
+ * Colors used, when the specific fg == defaultfg. So in reverse mode this
+ * will reverse too. Another logic would only make the simple feature too
+ * complex.
+ */
+static unsigned int defaultitalic = 11;
+static unsigned int defaultunderline = 7;
+
+/*
  * Internal mouse shortcuts.
  * Beware that overloading Button1 will disable the selection.
  */
 static MouseShortcut mshortcuts[] = {
 	/* button               mask            string */
-	{ Button4,              XK_ANY_MOD,     "\031" },
-	{ Button5,              XK_ANY_MOD,     "\005" },
+	{ Button4,              XK_NO_MOD,      "\031" },
+	{ Button5,              XK_NO_MOD,      "\005" },
 };
 
 static MouseKey mkeys[] = {
 	/* button               mask            function        argument */
-	{ Button4,              0,              kscrollup,      {.i =  3} },
-	{ Button5,              0,              kscrolldown,    {.i =  3} },
+	{ Button4,              ShiftMask,      kscrollup,      {.i =  1} },
+	{ Button5,              ShiftMask,      kscrolldown,    {.i =  1} },
 };
 
 /* Internal keyboard shortcuts. */
 #define MODKEY Mod1Mask
 
 static Shortcut shortcuts[] = {
-	/* mask                  keysym          function        argument */
-	{ XK_ANY_MOD,            XK_Break,       sendbreak,      {.i =  0} },
-	{ ControlMask,           XK_Print,       toggleprinter,  {.i =  0} },
-	{ ShiftMask,             XK_Print,       printscreen,    {.i =  0} },
-	{ XK_ANY_MOD,            XK_Print,       printsel,       {.i =  0} },
-	{ MODKEY|ShiftMask,      XK_Prior,       xzoom,          {.f = +1} },
-	{ MODKEY|ShiftMask,      XK_Next,        xzoom,          {.f = -1} },
-	{ MODKEY|ShiftMask,      XK_Home,        xzoomreset,     {.f =  0} },
-	{ ShiftMask,             XK_Insert,      selpaste,       {.i =  0} },
-	{ MODKEY|ShiftMask,      XK_Insert,      clippaste,      {.i =  0} },
-	{ ControlMask|ShiftMask, XK_C,           clipcopy,       {.i =  0} },
-	{ ControlMask|ShiftMask, XK_V,           clippaste,      {.i =  0} },
-	{ MODKEY,                XK_Num_Lock,    numlock,        {.i =  0} },
+	/* mask                 keysym          function        argument */
+	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
+	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
+	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
+	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
+	{ MODKEY|ShiftMask,     XK_Prior,       xzoom,          {.f = +1} },
+	{ MODKEY|ShiftMask,     XK_Next,        xzoom,          {.f = -1} },
+	{ MODKEY|ShiftMask,     XK_Home,        xzoomreset,     {.f =  0} },
+	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
+	{ MODKEY|ShiftMask,     XK_Insert,      clippaste,      {.i =  0} },
+	{ MODKEY|ShiftMask,     XK_C,           clipcopy,       {.i =  0} },
+	{ MODKEY|ShiftMask,     XK_V,           clippaste,      {.i =  0} },
+	{ MODKEY,               XK_Num_Lock,    numlock,        {.i =  0} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 };
@@ -339,8 +309,8 @@ static Key key[] = {
 	{ XK_Delete,        ControlMask,    "\033[3;5~",    +1,    0,    0},
 	{ XK_Delete,        ShiftMask,      "\033[2K",      -1,    0,    0},
 	{ XK_Delete,        ShiftMask,      "\033[3;2~",    +1,    0,    0},
-	// changed by j0sh so that the delete key works
-	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",       0,    0,    0},
+	{ XK_Delete,        XK_ANY_MOD,     "\033[P",       -1,    0,    0},
+	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",      +1,    0,    0},
 	{ XK_BackSpace,     XK_NO_MOD,      "\177",          0,    0,    0},
 	{ XK_Home,          ShiftMask,      "\033[2J",       0,   -1,    0},
 	{ XK_Home,          ShiftMask,      "\033[1;2H",     0,   +1,    0},
@@ -455,3 +425,4 @@ static Key key[] = {
 static uint selmasks[] = {
 	[SEL_RECTANGULAR] = Mod1Mask,
 };
+

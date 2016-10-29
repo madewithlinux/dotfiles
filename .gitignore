@@ -3,3 +3,7 @@
 .idea/
 CMakeCache.txt
 CMakeFiles/
+cmake_install.cmake
+.ycm_extra_conf.py
+.clang-format
+dist/

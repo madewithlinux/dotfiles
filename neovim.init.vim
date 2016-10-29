@@ -90,3 +90,4 @@ let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1

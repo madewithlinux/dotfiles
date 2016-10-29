@@ -1,18 +1,21 @@
-# dwm - dynamic window manager
+# st - simple terminal
 # See LICENSE file for copyright and license details.
 
 include config.mk
 
-SRC = drw.c dwm.c util.c
+SRC = st.c
 OBJ = ${SRC:.c=.o}
 
-all: options dwm
+all: options st
 
 options:
-	@echo dwm build options:
+	@echo st build options:
 	@echo "CFLAGS   = ${CFLAGS}"
 	@echo "LDFLAGS  = ${LDFLAGS}"
 	@echo "CC       = ${CC}"
+
+config.h:
+	cp config.def.h config.h
 
 .c.o:
 	@echo CC $<
@@ -20,41 +23,38 @@ options:
 
 ${OBJ}: config.h config.mk
 
-config.h:
-	@echo creating $@ from config.def.h
-	@cp config.def.h $@
-
-dwm: ${OBJ}
+st: ${OBJ}
 	@echo CC -o $@
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
 	@echo cleaning
-	@rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz
+	@rm -f st ${OBJ} st-${VERSION}.tar.gz
 
 dist: clean
 	@echo creating dist tarball
-	@mkdir -p dwm-${VERSION}
-	@cp -R LICENSE TODO BUGS Makefile README config.def.h config.mk \
-		dwm.1 drw.h util.h ${SRC} dwm.png transient.c dwm-${VERSION}
-	@tar -cf dwm-${VERSION}.tar dwm-${VERSION}
-	@gzip dwm-${VERSION}.tar
-	@rm -rf dwm-${VERSION}
+	@mkdir -p st-${VERSION}
+	@cp -R LICENSE Makefile README config.mk config.def.h st.info st.1 arg.h ${SRC} st-${VERSION}
+	@tar -cf st-${VERSION}.tar st-${VERSION}
+	@gzip st-${VERSION}.tar
+	@rm -rf st-${VERSION}
 
 install: all
 	@echo installing executable file to ${DESTDIR}${PREFIX}/bin
 	@mkdir -p ${DESTDIR}${PREFIX}/bin
-	@cp -f dwm ${DESTDIR}${PREFIX}/bin
-	@chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
+	@cp -f st ${DESTDIR}${PREFIX}/bin
+	@chmod 755 ${DESTDIR}${PREFIX}/bin/st
 	@echo installing manual page to ${DESTDIR}${MANPREFIX}/man1
 	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
-	@sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
-	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
+	@sed "s/VERSION/${VERSION}/g" < st.1 > ${DESTDIR}${MANPREFIX}/man1/st.1
+	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/st.1
+	@echo Please see the README file regarding the terminfo entry of st.
+	@tic -s st.info
 
 uninstall:
 	@echo removing executable file from ${DESTDIR}${PREFIX}/bin
-	@rm -f ${DESTDIR}${PREFIX}/bin/dwm
+	@rm -f ${DESTDIR}${PREFIX}/bin/st
 	@echo removing manual page from ${DESTDIR}${MANPREFIX}/man1
-	@rm -f ${DESTDIR}${MANPREFIX}/man1/dwm.1
+	@rm -f ${DESTDIR}${MANPREFIX}/man1/st.1
 
 .PHONY: all options clean dist install uninstall
