@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# (c) Copyright 2014 Josh Wright
+index()
+{
+	input="$1"
+	output="$2"
+	tmpfolder="/tmp/bash-""$RANDOM"
+	mkdir "$tmpfolder"
+	ncdu "$input" -o "$tmpfolder"/ncdu
+	find "$input" > "$tmpfolder"/find
+	rsync -a "$input" > "$tmpfolder"/rsync
+	tar -Ipixz -cpf "$output" -C "$tmpfolder" .
+	rm -r "$tmpfolder"
+}
+index "$1" "$2"
