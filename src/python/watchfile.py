@@ -11,7 +11,8 @@ def log(x):
 
 def clearscreen():
     os.system('clear')
-    print('') #todo
+    #print('') #todo print filename, command, and time?
+
 def runcpp(args):
     # todo
     p = subprocess.run(['g++', '--std=c++11', '-lpthread', args[0]])
@@ -72,6 +73,7 @@ if __name__ == '__main__':
             if event is not None:
                 if len(set(event[1]) & watch_events) != 0: 
                     sub.terminate()
+                    clearscreen()
                     if shell:
                         sub = subprocess.Popen(['bash', '-c', args[0]])
                     else:
