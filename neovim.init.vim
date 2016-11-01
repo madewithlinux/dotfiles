@@ -1,7 +1,6 @@
 set relativenumber
 set number
 set autochdir
-hi Visual ctermbg=8
 augroup myvimrc
     au!
     au BufWritePost .neovim.init.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
@@ -17,7 +16,6 @@ set nospell spelllang=en_us
 syntax on
 set nocompatible              " be iMproved, required
 filetype off                  " required
-
 
 call plug#begin()
 Plug 'VundleVim/Vundle.vim'
@@ -41,6 +39,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'KabbAmine/vCoolor.vim'
 Plug 'haya14busa/incsearch.vim'
 Plug 'pelodelfuego/vim-swoop'
+Plug 'tpope/vim-commentary'
+
 call plug#end()
 
 " syntastic
@@ -91,3 +91,12 @@ let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+" comment (_ is actually /)
+map <C-_> :Commentary<CR>
+
+" more visible colors for hilights
+hi Visual ctermbg=8
+hi SpellBad ctermfg=254 ctermbg=13 guifg=#ffffff guibg=#FF55FF
+hi SpellCap ctermfg=254 ctermbg=17 guifg=#ffffff guibg=#FF55FF
+
