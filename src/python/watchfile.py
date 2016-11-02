@@ -4,6 +4,7 @@ import inotify.adapters
 import os
 import sys
 import subprocess
+from time import time
 
 def log(x):
     sys.stderr.write(x)
@@ -21,7 +22,21 @@ def runcpp(args):
     else:
         return subprocess.Popen(['./a.out'] + args[1:])
 
+
+def runfile(args):
+    ext = os.path.splitext(args[0])[1]
+    runner = runners[ext]
+    if isinstance(runner, str):
+        # normal things
+        return subprocess.Popen([runner] + args)
+    elif isinstance(runner, list):
+        return subprocess.Popen(runner + args)
+    else:
+        # special case function
+        return runner(args)
+
 runners = {
+    '.tex': ['pdflatex', '-output-directory=.latex', '--halt-on-error', '-aux-directory=.latex'],
     '.sh':  'bash',
     '.hs':  'runhaskell',
     '.py':  'python3',
@@ -30,18 +45,11 @@ runners = {
     '':     'bash',
 }
 watch_events = {'CLOSE_WRITE', 'IN_MODIFY'}
-
-def runfile(args):
-    ext = os.path.splitext(args[0])[1]
-    runner = runners[ext]
-    if isinstance(runner, str):
-        # normal things
-        return subprocess.Popen([runner] + args)
-    else:
-        # special case function
-        return runner(args)
+# todo figure out a better way to do this
+build_interval = 1.5 # seconds
 
 if __name__ == '__main__':
+    last_build = time()
     if (len(sys.argv) < 2):
         print("Usage:")
         print(sys.argv[0], "<file> [args...]")
@@ -70,8 +78,9 @@ if __name__ == '__main__':
 
     try:
         for event in i.event_gen():
-            if event is not None:
+            if event is not None and time() - last_build > build_interval:
                 if len(set(event[1]) & watch_events) != 0: 
+                    last_build = time()
                     sub.terminate()
                     clearscreen()
                     if shell:
