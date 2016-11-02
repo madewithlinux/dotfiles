@@ -82,6 +82,12 @@ map <silent> te :GhcModTypeClear<CR>
 " vimtex
 let g:vimtex_echo_ignore_wait = 1
 autocmd filetype tex setlocal spell
+" check for modelines (whthin the top 5 lines of a file?)
+" not security-good for editing files from sketchy sources
+set modeline
+set modelines=5
+" maybe this will work
+autocmd FileType tex set shiftwidth=2
 
 " multi cursor
 let g:multi_cursor_use_default_mapping=0
@@ -99,4 +105,14 @@ map <C-_> :Commentary<CR>
 hi Visual ctermbg=8
 hi SpellBad ctermfg=254 ctermbg=13 guifg=#ffffff guibg=#FF55FF
 hi SpellCap ctermfg=254 ctermbg=17 guifg=#ffffff guibg=#FF55FF
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" not actually very good, come back to this later
+" (maybe find an actual plugin to do this)
+autocmd CursorMoved * exe exists("HlUnderCursor")?HlUnderCursor?printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\')):'match none':""
+nnoremap <silent> <F3> :exe "let HlUnderCursor=exists(\"HlUnderCursor\")?HlUnderCursor*-1+1:1"<CR>
+let HlUnderCursor=0
+"autocmd FileType python let HlUnderCursor=1
+"autocmd FileType rust   let HlUnderCursor=1
+"autocmd FileType cpp    let HlUnderCursor=1
+"autocmd FileType c      let HlUnderCursor=1
 
