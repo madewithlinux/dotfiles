@@ -7,7 +7,7 @@ augroup myvimrc
 augroup END
 
 "set tabstop=4
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set breakindent
 set linebreak
 set spellfile=~/.config/nvim/spell/en.utf-8.add
