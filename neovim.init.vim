@@ -29,16 +29,16 @@ Plug 'davidhalter/jedi-vim'
 Plug 'ap/vim-buftabline'
 Plug 'wincent/command-t'
 Plug 'eagletmt/neco-ghc'
-Plug 'Shougo/vimproc.vim'
+" Plug 'Shougo/vimproc.vim'
 Plug 'eagletmt/ghcmod-vim'
 Plug 'rdnetto/YCM-Generator'
-Plug 'lervag/vimtex'
-Plug 'Rename'
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'lervag/vimtex'
+" Plug 'Rename'
+" Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-gitgutter'
-Plug 'KabbAmine/vCoolor.vim'
+" Plug 'KabbAmine/vCoolor.vim'
 Plug 'haya14busa/incsearch.vim'
-Plug 'pelodelfuego/vim-swoop'
+" Plug 'pelodelfuego/vim-swoop'
 Plug 'tpope/vim-commentary'
 
 call plug#end()
@@ -115,4 +115,7 @@ let HlUnderCursor=0
 "autocmd FileType rust   let HlUnderCursor=1
 "autocmd FileType cpp    let HlUnderCursor=1
 "autocmd FileType c      let HlUnderCursor=1
+
+" autopairs: just added $ for latex
+autocmd FileType tex let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '$':'$'}
 
