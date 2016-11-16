@@ -4,6 +4,7 @@ import inotify.adapters
 import os
 import sys
 import subprocess
+import datetime
 from time import time
 
 def log(x):
@@ -12,7 +13,7 @@ def log(x):
 
 def clearscreen():
     os.system('clear')
-    #print('') #todo print filename, command, and time?
+    print('>', datetime.datetime.now(), ' '.join(sys.argv))
 
 def runcpp(args):
     # todo
@@ -44,7 +45,7 @@ runners = {
     '.cpp': runcpp,
     '':     'bash',
 }
-watch_events = {'CLOSE_WRITE', 'IN_MODIFY'}
+watch_events = {'CLOSE_WRITE', 'IN_MODIFY', 'IN_MOVE_SELF'}
 # todo figure out a better way to do this
 build_interval = 1.5 # seconds
 
@@ -67,26 +68,36 @@ if __name__ == '__main__':
         args  = sys.argv[1:]
         shell = False
     sub  = None
-    i    = inotify.adapters.Inotify()
-    i.add_watch(bytes(f, 'utf-8'))
 
-    # run first time
-    if shell:
-        sub = subprocess.Popen(['bash', '-c', args[0]])
-    else:
-        sub = runfile(args)
+    while True:
+        i = inotify.adapters.Inotify()
+        i.remove_watch(bytes(f, 'utf-8'))
+        i.add_watch(bytes(f, 'utf-8'))
 
-    try:
-        for event in i.event_gen():
-            if event is not None and time() - last_build > build_interval:
-                if len(set(event[1]) & watch_events) != 0: 
-                    last_build = time()
-                    sub.terminate()
-                    clearscreen()
-                    if shell:
-                        sub = subprocess.Popen(['bash', '-c', args[0]])
-                    else:
-                        sub = runfile(args)
-    finally:
-        pass
+        # run first time
+        if sub is not None: sub.terminate()
+        clearscreen()
+        if shell:
+            sub = subprocess.Popen(['bash', '-c', args[0]])
+        else:
+            sub = runfile(args)
+
+        try:
+            for event in i.event_gen():
+                if event is None: continue
+                # print(event)
+                if time() - last_build > build_interval:
+                    if len(set(event[1]) & watch_events) != 0: 
+                        last_build = time()
+                        sub.terminate()
+                        clearscreen()
+                        if shell:
+                            sub = subprocess.Popen(['bash', '-c', args[0]])
+                        else:
+                            sub = runfile(args)
+                elif 'IN_DELETE_SELF' in event[1]:
+                    # if the file is deleted, start again and re-add the watch
+                    break
+        finally:
+            pass
 

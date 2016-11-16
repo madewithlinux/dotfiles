@@ -19,3 +19,4 @@ else:
 	for i in range(1,-range_length):
 		current_day += datetime.timedelta(1)
 		print(current_day.strftime(date_spec))
+

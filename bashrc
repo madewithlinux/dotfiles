@@ -157,9 +157,21 @@ title() {
 		echo -en "\033]0;${*}\a"
 	fi
 }
-
+build_tex() {
+    mkdir -p .latex
+    pdflatex --halt-on-error -output-directory=.latex -aux-directory=.latex $1
+    echo "${1%.tex}.pdf"
+    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile="${1%.tex}.pdf" .latex/"${1%.tex}.pdf"
+}
 watch_tex() {
-    find $1 -name '*.tex' -execdir bash -c 'echo watching {}; (while inotifywait {} ; do pdflatex -output-directory=.latex --halt-on-error -aux-directory=.latex {}; done) &' \{\} ';';
+    # find $1 -name '*.tex' -execdir bash -c 'echo watching {}; (while inotifywait {} ; do pdflatex -output-directory=.latex --halt-on-error -aux-directory=.latex {}; done) &' \{\} ';';
+    echo "${1%.tex}.pdf"
+    while inotifywait $1; do
+        mkdir -p .latex
+        pdflatex --halt-on-error -output-directory=.latex -aux-directory=.latex $1
+        echo "${1%.tex}.pdf"
+	    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile="${1%.tex}.pdf" .latex/"${1%.tex}.pdf"
+    done
 }
 
 # make the printPrtSc key into a menu key

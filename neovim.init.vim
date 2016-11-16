@@ -23,10 +23,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/syntastic'
 Plug 'racer-rust/vim-racer'
 Plug 'Valloric/YouCompleteMe'
-Plug 'jiangmiao/auto-pairs'
-Plug 'godlygeek/tabular'
 Plug 'davidhalter/jedi-vim'
-Plug 'ap/vim-buftabline'
 Plug 'wincent/command-t'
 Plug 'eagletmt/neco-ghc'
 " Plug 'Shougo/vimproc.vim'
@@ -38,8 +35,13 @@ Plug 'rdnetto/YCM-Generator'
 Plug 'airblade/vim-gitgutter'
 " Plug 'KabbAmine/vCoolor.vim'
 Plug 'haya14busa/incsearch.vim'
-" Plug 'pelodelfuego/vim-swoop'
+Plug 'pelodelfuego/vim-swoop'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-obsession'
+Plug 'jiangmiao/auto-pairs'
+Plug 'godlygeek/tabular'
+Plug 'ap/vim-buftabline'
+Plug 'Shougo/vimproc.vim'
 
 call plug#end()
 
@@ -81,7 +83,8 @@ map <silent> te :GhcModTypeClear<CR>
 
 " vimtex
 let g:vimtex_echo_ignore_wait = 1
-autocmd filetype tex setlocal spell
+autocmd filetype tex  setlocal spell
+autocmd filetype text setlocal spell
 " check for modelines (whthin the top 5 lines of a file?)
 " not security-good for editing files from sketchy sources
 set modeline
@@ -103,8 +106,10 @@ map <C-_> :Commentary<CR>
 
 " more visible colors for hilights
 hi Visual ctermbg=8
-hi SpellBad ctermfg=254 ctermbg=13 guifg=#ffffff guibg=#FF55FF
+hi SpellBad ctermfg=254 ctermbg=52 guifg=#ffffff guibg=#FF55FF
 hi SpellCap ctermfg=254 ctermbg=17 guifg=#ffffff guibg=#FF55FF
+set cursorline 
+hi CursorLine   cterm=NONE ctermbg=235
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " not actually very good, come back to this later
 " (maybe find an actual plugin to do this)
