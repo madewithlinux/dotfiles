@@ -73,58 +73,27 @@ static unsigned int tabspaces = 8;
 
 
 
-
-
-
-
-
 /*ref: https://terminal.sexy/ */
-// /* monokai */
-// static const char *colorname[] = {
-//   [0] = "#272822", /* black   */
-//   [1] = "#f92672", /* red     */
-//   [2] = "#a6e22e", /* green   */
-//   [3] = "#f4bf75", /* yellow  */
-//   [4] = "#66d9ef", /* blue    */
-//   [5] = "#ae81ff", /* magenta */
-//   [6] = "#a1efe4", /* cyan    */
-//   [7] = "#f8f8f2", /* white   */
-//   [8]  = "#75715e", /* black   */
-//   [9]  = "#f92672", /* red     */
-//   [10] = "#a6e22e", /* green   */
-//   [11] = "#f4bf75", /* yellow  */
-//   [12] = "#66d9ef", /* blue    */
-//   [13] = "#ae81ff", /* magenta */
-//   [14] = "#a1efe4", /* cyan    */
-//   [15] = "#f9f8f5", /* white   */
-//   [256] = "#272822", /* background */
-//   [257] = "#f8f8f2", /* foreground */
-// };
-// static unsigned int defaultfg = 257;
-// static unsigned int defaultbg = 256;
-// static unsigned int defaultcs = 257;
-// static unsigned int defaultitalic = 7;
-// static unsigned int defaultunderline = 7;
-/* spacegray */
+
 static const char *colorname[] = {
-  [0]   = "#272e36", /* black   */
+  [0]   = "#f0f0f0", /* black   */
   [1]   = "#b24a56", /* red     */
-  [2]   = "#95D80A", /* green   */
-  [3]   = "#c6735a", /* yellow  */
-  [4]   = "#7c8fa5", /* blue    */
-  [5]   = "#a5789e", /* magenta */
-  [6]   = "#80cdcb", /* cyan    */
-  [7]   = "#F8F8F8", /* white   */
-  [8]   = "#555555", /* black   */
-  [9]   = "#ff5555", /* red     */
-  [10]  = "#50D850", /* green   */
-  [11]  = "#B58900", /* yellow  */
-  [12]  = "#8080FF", /* blue    */
-  [13]  = "#FF55FF", /* magenta */
-  [14]  = "#00CCCC", /* cyan    */
-  [15]  = "#ffffff", /* white   */
-  [256] = "#1A1E24", /* background */
-  [257] = "#F8F8F8", /* foreground */
+  [2]   = "#00702F", /* green   */
+  [3]   = "#1FA074", /* yellow  */
+  [4]   = "#06347C", /* blue    */
+  [5]   = "#613C72", /* magenta */
+  [6]   = "#3A759D", /* cyan    */
+  [7]   = "#404850", /* white   */
+  [8]   = "#f0f0f0", /* black   */
+  [9]   = "#CC5562", /* red     */
+  [10]  = "#008035", /* green   */
+  [11]  = "#18805C", /* yellow  */
+  [12]  = "#053580", /* blue    */
+  [13]  = "#6D4380", /* magenta */
+  [14]  = "#2F5F80", /* cyan    */
+  [15]  = "#404850", /* white   */
+  [256] = "#f0f0f0", /* background */
+  [257] = "#404850", /* foreground */
 };
 static unsigned int defaultfg = 257;
 static unsigned int defaultbg = 256;
