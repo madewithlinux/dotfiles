@@ -43,6 +43,8 @@ Plug 'godlygeek/tabular'
 Plug 'ap/vim-buftabline'
 Plug 'Shougo/vimproc.vim'
 
+Plug 'pyte'
+
 call plug#end()
 
 " syntastic
@@ -106,10 +108,14 @@ map <C-_> :Commentary<CR>
 
 " more visible colors for hilights
 hi Visual ctermbg=8
-hi SpellBad ctermfg=254 ctermbg=52 guifg=#ffffff guibg=#FF55FF
-hi SpellCap ctermfg=254 ctermbg=17 guifg=#ffffff guibg=#FF55FF
+hi SpellBad ctermbg=9
+hi SpellCap ctermbg=6
+"hi SpellBad ctermfg=254 ctermbg=52 guifg=#ffffff guibg=#FF55FF
+"hi SpellCap ctermfg=254 ctermbg=17 guifg=#ffffff guibg=#FF55FF
 set cursorline 
-hi CursorLine   cterm=NONE ctermbg=235
+hi CursorLine   cterm=NONE ctermbg=253
+hi Visual ctermbg=252
+hi Pmenu ctermfg=15 " fix completion popup color
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " not actually very good, come back to this later
 " (maybe find an actual plugin to do this)

@@ -76,22 +76,24 @@ static unsigned int tabspaces = 8;
 /*ref: https://terminal.sexy/ */
 
 static const char *colorname[] = {
-  [0]   = "#f0f0f0", /* black   */
-  [1]   = "#b24a56", /* red     */
-  [2]   = "#00702F", /* green   */
-  [3]   = "#1FA074", /* yellow  */
-  [4]   = "#06347C", /* blue    */
-  [5]   = "#613C72", /* magenta */
-  [6]   = "#3A759D", /* cyan    */
-  [7]   = "#404850", /* white   */
-  [8]   = "#f0f0f0", /* black   */
-  [9]   = "#CC5562", /* red     */
-  [10]  = "#008035", /* green   */
-  [11]  = "#18805C", /* yellow  */
-  [12]  = "#053580", /* blue    */
-  [13]  = "#6D4380", /* magenta */
-  [14]  = "#2F5F80", /* cyan    */
+  [0] = "#f0f0f0", /* black   */
+  [1] = "#ac4142", /* red     */
+  [2] = "#90a959", /* green   */
+  [3] = "#f4bf75", /* yellow  */
+  [4] = "#6a9fb5", /* blue    */
+  [5] = "#aa759f", /* magenta */
+  [6] = "#75b5aa", /* cyan    */
+  [7] = "#404850", /* white   */
+
+  [8]  = "#f0f0f0", /* black   */
+  [9]  = "#ac4142", /* red     */
+  [10] = "#90a959", /* green   */
+  [11] = "#f4bf75", /* yellow  */
+  [12] = "#6a9fb5", /* blue    */
+  [13] = "#aa759f", /* magenta */
+  [14] = "#75b5aa", /* cyan    */
   [15]  = "#404850", /* white   */
+  
   [256] = "#f0f0f0", /* background */
   [257] = "#404850", /* foreground */
 };
