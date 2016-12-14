@@ -187,7 +187,11 @@ binary_exists xmodmap && [[ -n "$DISPLAY" ]] && xmodmap -e "keycode 107 = Menu N
 # (because terminals are weird)
 COLOR_RED_BOLD="\[\e[1;33m\]"
 # COLOR_BG="\[\e[48;5;252m\]"
-COLOR_BG="\[\e[47m\]"
+if [[ "$(hostname)" == "j0sh-ThinkPad-T450s" ]]; then
+	COLOR_BG="\[\e[47m\]"
+else
+	COLOR_BG="\[\e[48;5;237m\]"
+fi
 COLOR_TIME="\[\e[1;32m\]"
 if [[ "$USER" == "root" ]]; then
 	COLOR_USER="\[\e[1;31m\]"
