@@ -18,7 +18,6 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 call plug#begin()
-Plug 'VundleVim/Vundle.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/syntastic'
 Plug 'racer-rust/vim-racer'
@@ -32,7 +31,7 @@ Plug 'rdnetto/YCM-Generator'
 " Plug 'lervag/vimtex'
 " Plug 'Rename'
 " Plug 'terryma/vim-multiple-cursors'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 " Plug 'KabbAmine/vCoolor.vim'
 Plug 'haya14busa/incsearch.vim'
 Plug 'pelodelfuego/vim-swoop'
