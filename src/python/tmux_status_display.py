@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop
 # Copyright (c) 2015 Josh Wright
 # This is the script that I use for my tmux status window
 # run "tmux refresh-client -S" to force update the status bar
@@ -39,14 +40,15 @@ dbus_properties_path = 'org.freedesktop.DBus.Properties'
 to_print = ""
 temp = 0
 for i in range(10):
-	# don't know why this number changes occasionally, but this fixes it
-	try:
-		with open("/sys/devices/platform/coretemp.0/hwmon/hwmon"+str(i)+"/temp1_input", 'r') as f:
-			# convert Celsius -> Fahrenheit
-			temp = int(f.read()) / 1000 * 9/5 + 32
-			break;
-	except:
-		pass
+    for j in range(10):
+        # don't know why this number changes occasionally, but this fixes it
+        try:
+            with open("/sys/devices/platform/coretemp.0/hwmon/hwmon"+str(i)+"/temp"+str(j)+"_input", 'r') as f:
+                # convert Celsius -> Fahrenheit
+                temp = int(f.read()) / 1000 * 9/5 + 32
+                break;
+        except:
+            pass
 
 system_bus = dbus.SystemBus()
 battery_object = system_bus.get_object(dbus_upower_path, composite_battery_path)
@@ -56,13 +58,14 @@ battery_properties = battery_properties_interface.GetAll("org.freedesktop.UPower
 battery_precent = int(battery_properties["Percentage"])
 battery_time = round(battery_properties["TimeToEmpty"] / 3600,1)
 
-to_print += str(temp)
+to_print += str(temp) + "F"
 to_print += " "
-to_print += str(battery_precent)
+to_print += str(battery_precent) + "%"
 to_print += " "
-to_print += str(battery_time)
+to_print += str(battery_time) + "h"
 to_print += " "
 to_print += datetime.datetime.now().strftime(time_fmt)
 # to_print += datetime.time.n
 
 print(to_print, end='')
+
