@@ -31,7 +31,7 @@ Plug 'rdnetto/YCM-Generator'
 " Plug 'lervag/vimtex'
 " Plug 'Rename'
 " Plug 'terryma/vim-multiple-cursors'
-" Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 " Plug 'KabbAmine/vCoolor.vim'
 Plug 'haya14busa/incsearch.vim'
 Plug 'pelodelfuego/vim-swoop'
@@ -41,8 +41,10 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'godlygeek/tabular'
 Plug 'ap/vim-buftabline'
 Plug 'Shougo/vimproc.vim'
-
+Plug 'eagletmt/neco-ghc'
 Plug 'pyte'
+Plug 'alx741/vim-hindent'
+Plug 'epeli/slimux'
 
 call plug#end()
 
@@ -56,7 +58,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
-map <leader>s :SyntasticToggleMode<CR>
+map <leader>w :SyntasticToggleMode<CR>
 
 set completeopt=longest,menuone
 
@@ -106,15 +108,15 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 map <C-_> :Commentary<CR>
 
 " more visible colors for hilights
-hi Visual ctermbg=8
 hi SpellBad ctermbg=9
 hi SpellCap ctermbg=6
 "hi SpellBad ctermfg=254 ctermbg=52 guifg=#ffffff guibg=#FF55FF
 "hi SpellCap ctermfg=254 ctermbg=17 guifg=#ffffff guibg=#FF55FF
 set cursorline 
 hi CursorLine   cterm=NONE ctermbg=253
-hi Visual ctermbg=252
-hi Pmenu ctermfg=15 " fix completion popup color
+hi Visual ctermbg=250
+hi VisualBlock ctermbg=250
+hi Pmenu ctermfg=16 " fix completion popup color
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " not actually very good, come back to this later
 " (maybe find an actual plugin to do this)
@@ -128,4 +130,19 @@ let HlUnderCursor=0
 
 " autopairs: just added $ for latex
 autocmd FileType tex let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '$':'$'}
+
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+let g:ycm_semantic_triggers = {'haskell' : ['.']}
+
+
+" let g:slime_target = "tmux"
+" let g:slime_paste_file = "$HOME/.slime_paste"
+let g:slimux_select_from_current_window = 1
+map <Leader>s :SlimuxREPLSendLine<CR>
+vmap <Leader>s :SlimuxREPLSendSelection<CR>
+map <Leader>b :SlimuxREPLSendBuffer<CR>
+map <Leader>a :SlimuxShellLast<CR>
+map <Leader>k :SlimuxSendKeysLast<CR>
+map <C-c><C-c> vip:SlimuxREPLSendSelection<CR>
+vmap <C-c><C-c> :SlimuxREPLSendSelection<CR>
 

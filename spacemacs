@@ -31,6 +31,9 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     html
+     javascript
+     haskell
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -50,9 +53,11 @@ values."
      syntax-checking
      semantic
      version-control
+     common-lisp
      (c-c++ :variables
             c-c++-enable-clang-support t
             c-c++-default-mode-for-headers 'c++-mode)
+     (latex :variables latex-enable-folding t)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -245,7 +250,7 @@ values."
    ;; If non nil show the color guide hint for transient state keys. (default t)
    dotspacemacs-show-transient-state-color-guide t
    ;; If non nil unicode symbols are displayed in the mode line. (default t)
-   dotspacemacs-mode-line-unicode-symbols t
+   dotspacemacs-mode-line-unicode-symbols nil
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
@@ -305,16 +310,17 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   ; (global-hl-line-mode -1) ; Disable current line highlight
   (global-linum-mode) ; Show line numbers by default
-  (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++11")))
+  (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++14")))
 
   ;; Enable autocomplete
   (ac-config-default)
   (global-company-mode)
-  (setq-default dotspacemacs-configuration-layers
-                '((auto-completion :variables
-                                   auto-completion-enable-snippets-in-popup t)))
+;  (setq-default dotspacemacs-configuration-layers
+;                '((auto-completion :variables
+;                                   auto-completion-enable-snippets-in-popup t)))
   (require 'semantic)
   (semantic-mode 1)
+  (setq c-basic-offset 4)
   )
 
 
@@ -322,3 +328,15 @@ you should place your code here."
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
