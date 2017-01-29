@@ -168,4 +168,4 @@ PS1="${COLOR_USER}\u${COLOR_RED_BOLD}@${COLOR_USER}\h${COLOR_PATH}\W${COLOR_NONE
 PS1_static=$PS1
 PROMPT_COMMAND='PS1="${COLOR_BG}${COLOR_TIME}$(date +%I:%M%p)${PS1_static}"'
 
-source_if_exists "$HOME/.bash_local"
+source_if_exists "$HOME/.bashrc_local"

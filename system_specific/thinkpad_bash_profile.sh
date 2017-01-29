@@ -1,4 +1,5 @@
-# test
+# (c) Copyright 2017 Josh Wright
+# bash_profile for my thinkpad
 
 #########################
 ## Paths and constants ##
