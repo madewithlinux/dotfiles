@@ -26,6 +26,7 @@ source_if_exists "$HOME/Dropbox/.bashrc_private" # stuff that doesn't belong on 
 source_if_exists "$HOME/.bashrc_local" # system-specific stuff
 export PATH="$PATH:/sbin:/usr/sbin"
 export PATH="$HOME/.local/bin/:$PATH"
+export PATH="$HOME/bin/:$PATH"
 file_exists "$HOME/Dropbox/"     && export PATH="$HOME/Dropbox/bin:$PATH"
 file_exists "$HOME/.cabal/"      && export PATH="$HOME/.cabal/bin:$PATH"
 file_exists "$HOME/.cargo/"      && export PATH="$HOME/.cargo/bin:$PATH"
