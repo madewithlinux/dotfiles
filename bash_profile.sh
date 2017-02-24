@@ -24,6 +24,8 @@ source_if_exists() {
 #########################
 source_if_exists "$HOME/Dropbox/.bashrc_private" # stuff that doesn't belong on a public git
 source_if_exists "$HOME/.bashrc_local" # system-specific stuff
+export GOPATH="$HOME/.go"
+export PATH="$PATH:/usr/local/go/bin"
 export PATH="$PATH:/sbin:/usr/sbin"
 export PATH="$HOME/.local/bin/:$PATH"
 export PATH="$HOME/bin/:$PATH"
