@@ -13,6 +13,9 @@ binary_exists() {
 file_exists() {
     [ -f "$1" ]
 }
+folder_exists() {
+    [ -d "$1" ]
+}
 source_if_exists() {
     if file_exists "$1"; then
         source "$1"
@@ -24,15 +27,24 @@ source_if_exists() {
 #########################
 source_if_exists "$HOME/Dropbox/.bashrc_private" # stuff that doesn't belong on a public git
 source_if_exists "$HOME/.bashrc_local" # system-specific stuff
-export GOPATH="$HOME/.go"
-export PATH="$PATH:/usr/local/go/bin"
 export PATH="$PATH:/sbin:/usr/sbin"
-export PATH="$HOME/.local/bin/:$PATH"
-export PATH="$HOME/bin/:$PATH"
-file_exists "$HOME/Dropbox/"     && export PATH="$HOME/Dropbox/bin:$PATH"
-file_exists "$HOME/.cabal/"      && export PATH="$HOME/.cabal/bin:$PATH"
-file_exists "$HOME/.cargo/"      && export PATH="$HOME/.cargo/bin:$PATH"
-file_exists "$HOME/.npm-global/" && export PATH="$HOME/.npm-global/bin:$PATH"
+export PATH="/opt/cmake/bin:$PATH"
+export PATH="/opt/ghc/8.0.1/bin/:$PATH"
+PATHS=(
+    "$HOME/bin/"
+    "$HOME/Dropbox/bin"
+    "$HOME/.local/bin/"
+    "/opt/cmake/bin/"
+    "$HOME/.go/bin"
+    "$HOME/.cabal/bin"
+    "$HOME/.cargo/bin"
+    "$HOME/.npm-global/bin"
+)
+for path in "${PATHS[@]}"; do
+    if folder_exists $path; then
+        export PATH="$path:$PATH"
+    fi
+done
 export EDITOR="vim"
 export TERMINAL="st"
 # need this for tmux to use 256 colors
