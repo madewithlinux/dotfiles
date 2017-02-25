@@ -25,6 +25,7 @@ source_if_exists() {
 #########################
 ## Paths and constants ##
 #########################
+export GOPATH="$HOME/.go"
 source_if_exists "$HOME/Dropbox/.bashrc_private" # stuff that doesn't belong on a public git
 source_if_exists "$HOME/.bashrc_local" # system-specific stuff
 export PATH="$PATH:/sbin:/usr/sbin"
@@ -34,6 +35,7 @@ PATHS=(
     "$HOME/bin/"
     "$HOME/Dropbox/bin"
     "$HOME/.local/bin/"
+    "/usr/local/go/bin/"
     "/opt/cmake/bin/"
     "$HOME/.go/bin"
     "$HOME/.cabal/bin"

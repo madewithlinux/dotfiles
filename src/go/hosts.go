@@ -13,12 +13,8 @@ import (
 func main() {
 	linesChannel := make(chan string, 1024*10)
 	urlFilePath := flag.String("urls", "urls.txt", "file containing urls to download")
-	// urls := []string{
-	// 	"http://hosts-file.net/download/hosts.txt",
-	// 	"http://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=hosts",
-	// 	"http://someonewhocares.org/hosts/zero/hosts",
-	// }
 	urls := readLines(*urlFilePath)
+	fmt.Fprintln(os.Stderr, urls, "\n")
 	var downloadsRemaining int64 = int64(len(urls))
 
 	for _, url := range urls {
@@ -71,7 +67,7 @@ func downloadHostsFile(url string, outChannel chan<- string, downloadsRemaining 
 }
 
 func collectLines(inChannel <-chan string) (output map[string]bool) {
-	output = make(map[string]bool, 1024*1024*10)
+	output = make(map[string]bool, 1024*1024*100)
 	for line := range inChannel {
 		output[line] = true
 	}
