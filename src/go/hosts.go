@@ -7,34 +7,65 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	"sync/atomic"
+	"sync"
+	"log"
 )
 
 func main() {
-	linesChannel := make(chan string, 1024*10)
-	urlFilePath := flag.String("urls", "urls.txt", "file containing urls to download")
-	urls := readLines(*urlFilePath)
-	fmt.Fprintln(os.Stderr, urls, "\n")
-	var downloadsRemaining int64 = int64(len(urls))
+	outputPath := flag.String("o", "hosts.txt", "output file")
+	urlFilePath := flag.String("i", "urls.txt", "file containing urls to download")
+	flag.Parse()
 
-	for _, url := range urls {
-		go downloadHostsFile(url, linesChannel, &downloadsRemaining)
+	urls := readLines(*urlFilePath)
+
+	var outFile *os.File
+	if *outputPath == "-" {
+		outFile = os.Stdout
+	} else {
+		var err error
+		outFile, err = os.OpenFile(*outputPath, os.O_RDWR|os.O_CREATE, 0644)
+		if err != nil {
+			panic(err)
+		}
+		defer outFile.Close()
 	}
 
-	lines := collectLines(linesChannel)
-	for line, _ := range lines {
-		fmt.Println("0.0.0.0", line)
+	linesChannel := make(chan []string, 20)
+	go downloadHostsFiles(urls, linesChannel)
+
+	printedLines := make(map[string]bool, 1024*1024*100)
+	for linesChunk := range linesChannel {
+		for _, line := range linesChunk {
+			if !printedLines[line] {
+				printedLines[line] = true
+				fmt.Fprintln(outFile, "0.0.0.0", line)
+			}
+		}
 	}
 }
 
-func downloadHostsFile(url string, outChannel chan<- string, downloadsRemaining *int64) {
+func downloadHostsFiles(urls []string, outChannel chan<- []string) {
+	var wg sync.WaitGroup
+	wg.Add(len(urls))
+
+	for _, url := range urls {
+		go downloadHostsFile(url, &wg, outChannel)
+	}
+
+	wg.Wait()
+	close(outChannel)
+}
+
+func downloadHostsFile(url string, wg *sync.WaitGroup, outChannel chan<- []string) {
 	resp, err := http.Get(url)
+	lines := make([]string, 1024)
+	defer wg.Done()
 
 	if err != nil {
-		fmt.Println("Failed to download", url, err)
+		log.Println("Failed to download", url, err)
 	} else {
-
 		defer resp.Body.Close()
+
 		scanner := bufio.NewScanner(resp.Body)
 		for scanner.Scan() {
 			line := scanner.Text()
@@ -42,36 +73,27 @@ func downloadHostsFile(url string, outChannel chan<- string, downloadsRemaining 
 			if strings.HasPrefix(line, "#") {
 				continue
 			}
+
 			// skip other garbage
 			if !(strings.HasPrefix(line, "0.0.0.0") ||
-				strings.HasPrefix(line, "127.0.01") ||
-				strings.HasPrefix(line, "::1")) {
+					strings.HasPrefix(line, "127.0.0.1") ||
+					strings.HasPrefix(line, "::1")) {
 				continue
 			}
+
 			// trim any kind of prefix
 			for _, prefix := range []string{"127.0.0.1", "0.0.0.0", "::1"} {
 				line = strings.TrimPrefix(line, prefix)
 			}
 			// finally, trim whitespace
 			line = strings.TrimSpace(line)
-			// send line to line-globber
-			outChannel <- line
+
+			lines = append(lines, line)
 		}
 
+		// send files on channel in chunks for efficiency
+		outChannel <- lines
 	}
-	// decrement the remaining counter, and check if we shall close the counter
-	atomic.AddInt64(downloadsRemaining, -1)
-	if atomic.LoadInt64(downloadsRemaining) == 0 {
-		close(outChannel)
-	}
-}
-
-func collectLines(inChannel <-chan string) (output map[string]bool) {
-	output = make(map[string]bool, 1024*1024*100)
-	for line := range inChannel {
-		output[line] = true
-	}
-	return
 }
 
 func readLines(filePath string) (output []string) {
@@ -83,13 +105,15 @@ func readLines(filePath string) (output []string) {
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		if strings.HasPrefix(scanner.Text(), "#") {
+		line := scanner.Text()
+
+		if strings.HasPrefix(line, "#") {
 			continue
 		}
-		if len(scanner.Text()) == 0 {
+		if len(line) == 0 {
 			continue
 		}
-		output = append(output, strings.TrimSpace(scanner.Text()))
+		output = append(output, strings.TrimSpace(line))
 	}
 	return
 }
