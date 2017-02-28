@@ -4,16 +4,19 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"github.com/gosuri/uiprogress"
+	"log"
+	"math"
 	"net/http"
 	"os"
 	"strings"
 	"sync"
-	"log"
 )
 
 func main() {
 	outputPath := flag.String("o", "hosts.txt", "output file")
 	urlFilePath := flag.String("i", "urls.txt", "file containing urls to download")
+	showProgress := flag.Bool("p", false, "show multi-progress bar")
 	flag.Parse()
 
 	urls := readLines(*urlFilePath)
@@ -31,9 +34,9 @@ func main() {
 	}
 
 	linesChannel := make(chan []string, 20)
-	go downloadHostsFiles(urls, linesChannel)
+	go downloadHostsFiles(urls, linesChannel, *showProgress)
 
-	printedLines := make(map[string]bool, 1024*1024*100)
+	printedLines := make(map[string]bool, 1024*1024*10)
 	for linesChunk := range linesChannel {
 		for _, line := range linesChunk {
 			if !printedLines[line] {
@@ -44,19 +47,22 @@ func main() {
 	}
 }
 
-func downloadHostsFiles(urls []string, outChannel chan<- []string) {
+func downloadHostsFiles(urls []string, outChannel chan<- []string, showProgress bool) {
 	var wg sync.WaitGroup
 	wg.Add(len(urls))
+	if showProgress {
+		uiprogress.Start()
+	}
 
 	for _, url := range urls {
-		go downloadHostsFile(url, &wg, outChannel)
+		go downloadHostsFile(url, &wg, outChannel, showProgress)
 	}
 
 	wg.Wait()
 	close(outChannel)
 }
 
-func downloadHostsFile(url string, wg *sync.WaitGroup, outChannel chan<- []string) {
+func downloadHostsFile(url string, wg *sync.WaitGroup, outChannel chan<- []string, showProgress bool) {
 	resp, err := http.Get(url)
 	lines := make([]string, 1024)
 	defer wg.Done()
@@ -65,10 +71,27 @@ func downloadHostsFile(url string, wg *sync.WaitGroup, outChannel chan<- []strin
 		log.Println("Failed to download", url, err)
 	} else {
 		defer resp.Body.Close()
+		var bar *uiprogress.Bar
+		// counter to keep track of how much we've downloaded
+		readBytes := 0
+		if showProgress {
+			if resp.ContentLength == -1 {
+				bar = uiprogress.AddBar(math.MaxInt32).AppendCompleted().PrependElapsed()
+			} else {
+				bar = uiprogress.AddBar(int(resp.ContentLength)).AppendCompleted().PrependElapsed()
+			}
+			// make sure that the bar eventually finishes
+			defer bar.Set(bar.Total)
+		}
 
 		scanner := bufio.NewScanner(resp.Body)
 		for scanner.Scan() {
 			line := scanner.Text()
+			if showProgress {
+				// update progress bar
+				readBytes += len(line)
+				bar.Set(readBytes)
+			}
 			// skip comments
 			if strings.HasPrefix(line, "#") {
 				continue
@@ -76,8 +99,8 @@ func downloadHostsFile(url string, wg *sync.WaitGroup, outChannel chan<- []strin
 
 			// skip other garbage
 			if !(strings.HasPrefix(line, "0.0.0.0") ||
-					strings.HasPrefix(line, "127.0.0.1") ||
-					strings.HasPrefix(line, "::1")) {
+				strings.HasPrefix(line, "127.0.0.1") ||
+				strings.HasPrefix(line, "::1")) {
 				continue
 			}
 
