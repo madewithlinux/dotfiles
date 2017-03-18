@@ -19,11 +19,11 @@ const (
 
 func main() {
 
-	temp := get_temp()
+	temp_c, temp_f := get_temp()
 	time_remaining, percentage := get_battery_info()
 	current_time := time.Now().Format("2006-01-02 8:04PM Mon")
 
-	fmt.Printf("%3.1fF %.1f%% %.1fh %s", temp, percentage, time_remaining, current_time)
+	fmt.Printf("%3.1fC %3.1fF %.1f%% %.1fh %s", temp_c, temp_f, percentage, time_remaining, current_time)
 
 }
 
@@ -33,7 +33,7 @@ func check(err error) {
 	}
 }
 
-func get_temp() float64 {
+func get_temp() (c, f float64) {
 	matches, err := filepath.Glob(TEMPERATURE_GLOB_PATH)
 	check(err)
 	contents, err := ioutil.ReadFile(matches[0])
@@ -43,7 +43,9 @@ func get_temp() float64 {
 	t, err := strconv.ParseFloat(contents_str, 64)
 	check(err)
 	// convert from celsius to fahrenheit
-	return t/1000.0*9.0/5.0 + 32.0
+	c = t / 1000.0
+	f = c*9.0/5.0 + 32.0
+	return
 }
 
 func get_battery_info() (time_remaining, percentage float64) {

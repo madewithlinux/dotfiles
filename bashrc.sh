@@ -1,7 +1,7 @@
 # (c) Copyright 2017 Josh Wright
 # bashrc
 
-if [[ "$MARKER_BASH_PROFILE" != "1" ]]; then
+if [[ "$MARKER_BASH_PROFILE" != "2" ]]; then
     . "$HOME/.bash_profile"
 fi
 # If not running interactively, don't do anything

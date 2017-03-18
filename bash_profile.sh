@@ -2,7 +2,7 @@
 # bash_profile
 
 # convenience marker so we can make sure this file has been sourced
-MARKER_BASH_PROFILE=1
+MARKER_BASH_PROFILE=2
 
 ###############
 ## functions ##
