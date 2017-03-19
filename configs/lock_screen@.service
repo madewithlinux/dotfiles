@@ -1,0 +1,14 @@
+[Unit]
+Description=lock screen on suspend (created by j0sh)
+Before=sleep.target
+
+[Service]
+User=%I
+# type must be forking for some dumb reason
+Type=forking
+Environment=DISPLAY=:0
+ExecStart=/home/j0sh/bin//lock_screen_with_i3lock.sh
+# ExecStartPost=/usr/bin/sleep 1
+
+[Install]
+WantedBy=sleep.target
