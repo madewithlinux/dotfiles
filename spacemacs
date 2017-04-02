@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     rust
      go
      clojure
      octave
@@ -329,6 +330,8 @@ you should place your code here."
   (setq c-basic-offset 4)
   (setq indent-tabs-mode nil)
   (setq tab-width 4)
+  (setq-default dotspacemacs-configuration-layers
+                '((haskell :variables haskell-enable-hindent-style "johan-tibell")))
   )
 
 
