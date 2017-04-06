@@ -8,6 +8,7 @@
 // static char font[] = "Input:pixelsize=20:antialias=true:autohint=true";
 // static char font[] = "Ubuntu Mono:pixelsize=20:antialias=true:autohint=true";
 static char font[] = "Inconsolata:pixelsize=17:antialias=true:autohint=true";
+// static char font[] = "Iosevka Slab StFW Light:pixelsize=12:antialias=true:autohint=true";
 static int borderpx = 0;
 #define histsize 32768
 
@@ -74,34 +75,82 @@ static unsigned int tabspaces = 8;
 
 
 /*ref: https://terminal.sexy/ */
+/*
+secure shell:
+background-color: #f0f0f0 //R:240 G:240 B:240
+foreground-color: #3b3b3b //R:59 G:59 B:59
+cursor-color:     #3b3b3b //R:59 G:59 B:59
+color-palette-override: {"0":"#adadad","1":"#c1494a","2":"#90a959","3":"#d6a056","4":"#6a9fb5","5":"#aa759f","6":"#419284","7":"#404850","8":"#adadad","9":"#c1494a","10":"#90a959","11":"#d6a056","12":"#6a9fb5","13":"#aa759f","14":"#75b5aa","15":"#404850"}
 
+Xresources:
+*.color0:       #adadad
+*.color10:      #90a959
+*.color11:      #d6a056
+*.color12:      #6a9fb5
+*.color13:      #aa759f
+*.color14:      #75b5aa
+*.color15:      #404850
+*.color1:       #c1494a
+*.color2:       #90a959
+*.color3:       #d6a056
+*.color4:       #6a9fb5
+*.color5:       #aa759f
+*.color6:       #419284
+*.color7:       #404850
+*.color8:       #adadad
+*.color9:       #c1494a
+*.cursorColor:  #3b3b3b
+*.foreground:   #3b3b3b
+*.background:   #f0f0f0
+*/
+/* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-  [0] = "#D7D7D7", /* black   */
-  [1] = "#ac4142", /* red     */
+
+  /* 8 normal colors */
+  [0] = "#adadad", /* black   */
+  [1] = "#c1494a", /* red     */
   [2] = "#90a959", /* green   */
-  [3] = "#f4bf75", /* yellow  */
+  [3] = "#d6a056", /* yellow  */
   [4] = "#6a9fb5", /* blue    */
   [5] = "#aa759f", /* magenta */
-  [6] = "#5B8C84", /* cyan    */
+  [6] = "#419284", /* cyan    */
   [7] = "#404850", /* white   */
 
-  [8]  = "#CCCCCC", /* black   */
-  [9]  = "#ac4142", /* red     */
+  /* 8 bright colors */
+  [8]  = "#adadad", /* black   */
+  [9]  = "#c1494a", /* red     */
   [10] = "#90a959", /* green   */
-  [11] = "#f4bf75", /* yellow  */
+  [11] = "#d6a056", /* yellow  */
   [12] = "#6a9fb5", /* blue    */
   [13] = "#aa759f", /* magenta */
-  [14] = "#6BA69C", /* cyan    */
-  [15]  = "#404850", /* white   */
-  
+  [14] = "#75b5aa", /* cyan    */
+  [15] = "#404850", /* white   */
+
+  /* special colors */
   [256] = "#f0f0f0", /* background */
-  [257] = "#404850", /* foreground */
+  [257] = "#3b3b3b", /* foreground */
 };
+
+/*
+ * Default colors (colorname index)
+ * foreground, background, cursor
+ */
 static unsigned int defaultfg = 257;
 static unsigned int defaultbg = 256;
 static unsigned int defaultcs = 257;
+
+/*
+ * Colors used, when the specific fg == defaultfg. So in reverse mode this
+ * will reverse too. Another logic would only make the simple feature too
+ * complex.
+ */
 static unsigned int defaultitalic = 7;
 static unsigned int defaultunderline = 7;
+
+
+
+
+
 
 
 
@@ -167,6 +216,8 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,                XK_Num_Lock,    numlock,        {.i =  0} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
+  // extract all visible urls in terminal
+  { MODKEY, 'u', externalpipe, { .v = "xurls | dmenu -l 10 | xargs -r open" } },
 };
 
 /*
