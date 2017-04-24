@@ -18,15 +18,15 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 call plug#begin()
-Plug 'rust-lang/rust.vim'
-Plug 'scrooloose/syntastic'
-Plug 'racer-rust/vim-racer'
+"Plug 'rust-lang/rust.vim'
+"Plug 'scrooloose/syntastic'
+"Plug 'racer-rust/vim-racer'
 Plug 'Valloric/YouCompleteMe'
-Plug 'davidhalter/jedi-vim'
+"Plug 'davidhalter/jedi-vim'
 Plug 'wincent/command-t'
-Plug 'eagletmt/neco-ghc'
+"Plug 'eagletmt/neco-ghc'
 " Plug 'Shougo/vimproc.vim'
-Plug 'eagletmt/ghcmod-vim'
+"Plug 'eagletmt/ghcmod-vim'
 Plug 'rdnetto/YCM-Generator'
 " Plug 'lervag/vimtex'
 " Plug 'Rename'
@@ -41,7 +41,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'godlygeek/tabular'
 Plug 'ap/vim-buftabline'
 Plug 'Shougo/vimproc.vim'
-Plug 'eagletmt/neco-ghc'
+"Plug 'eagletmt/neco-ghc'
 Plug 'pyte'
 Plug 'alx741/vim-hindent'
 Plug 'epeli/slimux'
@@ -50,7 +50,7 @@ call plug#end()
 
 " syntastic
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1

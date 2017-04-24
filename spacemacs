@@ -31,12 +31,14 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     ;; racket
      rust
      go
      clojure
-     octave
-     themes-megapack
-     python
+     ;; octave
+     ;; themes-megapack
+     (python :variables
+             python-enable-yapf-format-on-save t)
      html
      javascript
      haskell
@@ -59,7 +61,7 @@ values."
      syntax-checking
      semantic
      version-control
-     common-lisp
+     ;; common-lisp
      (c-c++ :variables
             c-c++-enable-clang-support t
             c-c++-default-mode-for-headers 'c++-mode)
