@@ -44,9 +44,16 @@ Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
 Plug 'godlygeek/tabular'
 Plug 'ap/vim-buftabline'
-Plug 'Shougo/vimproc.vim'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'epeli/slimux'
+
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-clang'
+" (Optional) Showing function signature and inline doc.
+Plug 'Shougo/echodoc.vim'
+
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
@@ -100,3 +107,19 @@ let g:deoplete#auto_complete_delay = 200
 inoremap <expr><tab>   pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <expr><S-tab> pumvisible() ? "\<c-p>" : "\<tab>"
 
+" language server, for rust
+" Required for operations modifying multiple buffers like rename.
+set hidden
+autocmd BufReadPost *.rs setlocal filetype=rust
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'javascript': ['/opt/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ }
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+" deoplete clang config
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-3.8/lib/libclang.so'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.8/lib/clang/3.8.0/include/'
