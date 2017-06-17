@@ -83,7 +83,7 @@ cursor-color:     #3b3b3b //R:59 G:59 B:59
 color-palette-override: {"0":"#adadad","1":"#c1494a","2":"#90a959","3":"#d6a056","4":"#6a9fb5","5":"#aa759f","6":"#419284","7":"#404850","8":"#adadad","9":"#c1494a","10":"#90a959","11":"#d6a056","12":"#6a9fb5","13":"#aa759f","14":"#75b5aa","15":"#404850"}
 
 Xresources:
-*.color0:       #adadad
+*.color0:       #595959
 *.color10:      #90a959
 *.color11:      #d6a056
 *.color12:      #6a9fb5
@@ -107,7 +107,7 @@ Xresources:
 static const char *colorname[] = {
 
   /* 8 normal colors */
-  [0] = "#adadad", /* black   */
+  [0] = "#595959", /* black   */
   [1] = "#c1494a", /* red     */
   [2] = "#90a959", /* green   */
   [3] = "#d6a056", /* yellow  */
@@ -117,7 +117,7 @@ static const char *colorname[] = {
   [7] = "#404850", /* white   */
 
   /* 8 bright colors */
-  [8]  = "#adadad", /* black   */
+  [8]  = "#595959", /* black   */
   [9]  = "#c1494a", /* red     */
   [10] = "#90a959", /* green   */
   [11] = "#d6a056", /* yellow  */
