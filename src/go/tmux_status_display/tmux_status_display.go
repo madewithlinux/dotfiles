@@ -20,10 +20,10 @@ const (
 func main() {
 
 	temp_c, temp_f := get_temp()
-	time_remaining, percentage := get_battery_info()
+	// time_remaining, percentage := get_battery_info()
 	current_time := time.Now().Format("2006-01-02 3:04PM Mon")
 
-	fmt.Printf("%3.1fC %3.1fF %.1f%% %.1fh %s", temp_c, temp_f, percentage, time_remaining, current_time)
+	fmt.Printf("%3.1fC %3.1fF %s", temp_c, temp_f, current_time)
 
 }
 
