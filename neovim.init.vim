@@ -30,7 +30,7 @@ hi SpellCap ctermbg=6
 "hi SpellBad ctermfg=254 ctermbg=52 guifg=#ffffff guibg=#FF55FF
 "hi SpellCap ctermfg=254 ctermbg=17 guifg=#ffffff guibg=#FF55FF
 set cursorline 
-hi CursorLine   cterm=NONE ctermbg=253
+hi CursorLine   cterm=underline
 hi Visual ctermbg=250
 hi VisualBlock ctermbg=250
 hi Pmenu ctermfg=16 " fix completion popup color
@@ -54,6 +54,7 @@ Plug 'zchee/deoplete-clang'
 Plug 'Shougo/echodoc.vim'
 
 Plug 'rust-lang/rust.vim'
+Plug 'cespare/vim-toml'
 
 call plug#end()
 
@@ -123,3 +124,4 @@ nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 " deoplete clang config
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-3.8/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.8/lib/clang/3.8.0/include/'
+
