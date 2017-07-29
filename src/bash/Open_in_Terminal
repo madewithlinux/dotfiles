@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+NAUTILUS_SCRIPT_SELECTED_FILE_PATHS=$(echo $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS|head -n 1)
+if [[ -d "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" ]]; then
+	path="$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS"
+else
+	path="${NAUTILUS_SCRIPT_CURRENT_URI#*file://}"
+fi
+
+cd "$path"
+
+exec st
