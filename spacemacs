@@ -41,6 +41,8 @@ values."
      (python :variables
              python-enable-yapf-format-on-save t)
      html
+     clojure
+     parinfer
      javascript
      (haskell :variables
               haskell-enable-hindent-style "johan-tibell"
@@ -334,6 +336,14 @@ you should place your code here."
   (setq c-basic-offset 4)
   (setq indent-tabs-mode nil)
   (setq tab-width 4)
+  ;; (setq parinfer-extensions
+  ;;       '(defaults       ; should be included.
+  ;;          pretty-parens  ; different paren styles for different modes.
+  ;;          evil           ; If you use Evil.
+  ;;          lispy          ; If you use Lispy. With this extension, you should install Lispy and do not enable lispy-mode directly.
+  ;;          paredit        ; Introduce some paredit commands.
+  ;;          smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
+  ;;          smart-yank))   ; Yank behavior depend on mode.
   )
 
 
@@ -346,7 +356,12 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol nil))
+ '(evil-want-Y-yank-to-eol nil)
+ '(safe-local-variable-values
+   (quote
+    ((cider-cljs-lein-repl . "(do (user/run) (user/browser-repl))")
+     (cider-refresh-after-fn . "reloaded.repl/resume")
+     (cider-refresh-before-fn . "reloaded.repl/suspend")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
