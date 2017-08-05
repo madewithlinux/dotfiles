@@ -72,63 +72,32 @@ static char termname[] = "xterm-256color";
 static unsigned int tabspaces = 8;
 
 
-
-
-/*ref: https://terminal.sexy/ */
-/*
-secure shell:
-background-color: #f0f0f0 //R:240 G:240 B:240
-foreground-color: #3b3b3b //R:59 G:59 B:59
-cursor-color:     #3b3b3b //R:59 G:59 B:59
-color-palette-override: {"0":"#adadad","1":"#c1494a","2":"#90a959","3":"#d6a056","4":"#6a9fb5","5":"#aa759f","6":"#419284","7":"#404850","8":"#adadad","9":"#c1494a","10":"#90a959","11":"#d6a056","12":"#6a9fb5","13":"#aa759f","14":"#75b5aa","15":"#404850"}
-
-Xresources:
-*.color0:       #595959
-*.color10:      #90a959
-*.color11:      #d6a056
-*.color12:      #6a9fb5
-*.color13:      #aa759f
-*.color14:      #75b5aa
-*.color15:      #404850
-*.color1:       #c1494a
-*.color2:       #90a959
-*.color3:       #d6a056
-*.color4:       #6a9fb5
-*.color5:       #aa759f
-*.color6:       #419284
-*.color7:       #404850
-*.color8:       #adadad
-*.color9:       #c1494a
-*.cursorColor:  #3b3b3b
-*.foreground:   #3b3b3b
-*.background:   #f0f0f0
-*/
 /* Terminal colors (16 first used in escape sequence) */
+/*
+["404040","C1494A","90A959","D49C4F","6A9FB5","AA759F","419284","404850","474747","B33D3E","92A95B","D7A35B","77A7BB","B181A7","75B5AA","404850","F5F5F5","3B3B3B"]
+*/
 static const char *colorname[] = {
-
-  /* 8 normal colors */
-  [0] = "#595959", /* black   */
-  [1] = "#c1494a", /* red     */
-  [2] = "#90a959", /* green   */
-  [3] = "#d6a056", /* yellow  */
-  [4] = "#6a9fb5", /* blue    */
-  [5] = "#aa759f", /* magenta */
-  [6] = "#419284", /* cyan    */
-  [7] = "#404850", /* white   */
-
-  /* 8 bright colors */
-  [8]  = "#595959", /* black   */
-  [9]  = "#c1494a", /* red     */
-  [10] = "#90a959", /* green   */
-  [11] = "#d6a056", /* yellow  */
-  [12] = "#6a9fb5", /* blue    */
-  [13] = "#aa759f", /* magenta */
-  [14] = "#75b5aa", /* cyan    */
-  [15] = "#404850", /* white   */
-
-  /* special colors */
-  [256] = "#f0f0f0", /* background */
-  [257] = "#3b3b3b", /* foreground */
+	/* 8 normal colors */
+	[ 0] = "#404040", /* black   */ 
+	[ 1] = "#c1494a", /* red     */ 
+	[ 2] = "#90a959", /* green   */ 
+	[ 3] = "#d49c4f", /* yellow  */ 
+	[ 4] = "#6a9fb5", /* blue    */ 
+	[ 5] = "#aa759f", /* magenta */ 
+	[ 6] = "#419284", /* cyan    */ 
+	[ 7] = "#404850", /* white   */ 
+	/* 8 bright colors */
+	[ 8] = "#474747", /* black   */ 
+	[ 9] = "#b33d3e", /* red     */ 
+	[10] = "#92a95b", /* green   */ 
+	[11] = "#d7a35b", /* yellow  */ 
+	[12] = "#77a7bb", /* blue    */ 
+	[13] = "#b181a7", /* magenta */ 
+	[14] = "#75b5aa", /* cyan    */ 
+	[15] = "#404850", /* white   */ 
+	/* special colors */
+	[256] = "#f5f5f5", /* background */
+	[257] = "#3b3b3b", /* foreground */
 };
 
 /*
