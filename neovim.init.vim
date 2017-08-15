@@ -35,6 +35,10 @@ hi Visual ctermbg=250
 hi VisualBlock ctermbg=250
 hi Pmenu ctermfg=16 " fix completion popup color
 
+" be like spacemacs
+inoremap fd <ESC>
+noremap <Space>fs :w<CR>
+
 call plug#begin()
 Plug 'wincent/command-t'
 Plug 'airblade/vim-gitgutter'
