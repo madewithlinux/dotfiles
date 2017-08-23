@@ -60,6 +60,8 @@ Plug 'Shougo/echodoc.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 
+Plug 'fatih/vim-go'
+
 call plug#end()
 
 " for buftabline

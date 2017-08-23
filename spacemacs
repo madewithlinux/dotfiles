@@ -34,7 +34,8 @@ values."
      yaml
      ;; racket
      rust
-     go
+     (go :variables
+         go-tab-width 4)
      clojure
      ;; octave
      ;; themes-megapack
@@ -42,7 +43,7 @@ values."
              python-enable-yapf-format-on-save t)
      html
      clojure
-     parinfer
+     ;; parinfer ;; TODO add needed extra layer stuff to git?
      javascript
      (haskell :variables
               haskell-enable-hindent-style "johan-tibell"
@@ -53,7 +54,8 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-complete-with-key-sequence "jk")
      better-defaults
      emacs-lisp
      git
@@ -66,6 +68,7 @@ values."
      syntax-checking
      semantic
      version-control
+     themes-megapack
      ;; common-lisp
      (c-c++ :variables
             c-c++-enable-clang-support t
@@ -156,7 +159,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 18
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -333,9 +336,9 @@ you should place your code here."
 ;                                   auto-completion-enable-snippets-in-popup t)))
   (require 'semantic)
   (semantic-mode 1)
-  (setq c-basic-offset 4)
-  (setq indent-tabs-mode nil)
-  (setq tab-width 4)
+  (setq-default c-basic-offset 4)
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
   ;; (setq parinfer-extensions
   ;;       '(defaults       ; should be included.
   ;;          pretty-parens  ; different paren styles for different modes.
