@@ -166,6 +166,20 @@ COLOR_PATH="\[\e[1;35m\]"
 COLOR_NONE="\[\e[0m\]"
 PS1="${COLOR_USER}\u${COLOR_RED_BOLD}@${COLOR_USER}\h${COLOR_PATH}\W${COLOR_NONE}${POWERLINE_ARROW}${COLOR_NONE} "
 PS1_static=$PS1
-PROMPT_COMMAND='PS1="${COLOR_BG}${COLOR_TIME}$(date +%I:%M%p)${PS1_static}"'
+function _prompt_command() {
+    if type __vte_prompt_command >/dev/null 2>&1; then
+      __vte_prompt_command
+    fi
+    if [[ -n $VIRTUAL_ENV ]]; then
+      # in virtual env
+      PS1="${COLOR_BG}${COLOR_TIME}$(date +%I:%M%p)${COLOR_USER}\u${COLOR_RED_BOLD}@${COLOR_USER}\h${COLOR_PATH}\W${COLOR_USER}*${COLOR_NONE} "
+    else
+      PS1="${COLOR_BG}${COLOR_TIME}$(date +%I:%M%p)${PS1_static}"
+    fi
+}
+PROMPT_COMMAND=_prompt_command
 
 source_if_exists "$HOME/.bashrc_local"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

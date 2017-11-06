@@ -49,7 +49,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'godlygeek/tabular'
 Plug 'ap/vim-buftabline'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'epeli/slimux'
+" Plug 'epeli/slimux'
+Plug 'hecal3/vim-leader-guide'
 
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
