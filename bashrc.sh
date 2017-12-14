@@ -179,7 +179,8 @@ function _prompt_command() {
 }
 PROMPT_COMMAND=_prompt_command
 
+source_if_exists "/usr/share/modules/init/bash"
+if type module > /dev/null 2>&1; then
+	module load use.own
+fi
 source_if_exists "$HOME/.bashrc_local"
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"

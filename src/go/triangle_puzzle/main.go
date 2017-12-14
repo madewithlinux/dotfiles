@@ -1,1 +1,8 @@
-package triangle_puzzle
+package main
+
+type TriangleBoard struct {
+
+}
+type TriangleMove struct {
+
+}
