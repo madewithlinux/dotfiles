@@ -1,0 +1,216 @@
+origin: git@github.com:Joshua-Wright/image_stuff.git
+HEAD: 75987372ca4888681ff0f7b39857ae231d8f6050
+diff --git a/go/main/dragon_curve.go b/go/main/dragon_curve.go
+index 1a8142a..5f0dc28 100644
+--- a/go/main/dragon_curve.go
++++ b/go/main/dragon_curve.go
+@@ -5,16 +5,27 @@ import (
+ 	"github.com/fogleman/gg"
+ 	"image/color"
+ 	"math"
++	"image"
++	"os"
++	"image/png"
++	"sync"
+ )
+ 
+ func main() {
+-	width := 2000
+-	xmid := -0.25
+-	ymid := -0.25
+-	dw := 1.75
++
++	// 16:9 monitor in center flanked by two 5:4 monitors (vertical)
++	// equivalent to a 16:9 monitor joined horizontally with a 8:5 monitor
++	// need to make 9 equal to 5, so multiply by 5/9
++	// so final ratio is 5:(8*16*5/9) = 5:16.88888888
++	// for 1440px height, width should be 16.9*1440=24320.0000000000000000016
++	width := 24320 / 4
++	// also, center about (-1,0) to get the joining point in the middle of the middle moitor
++	xmid := 0.0
++	ymid := 0.0
++	dw := 4.0
+ 	depth := 10
+ 	smoothness := 12
+-	line_thickness := 4.0
++	line_thickness := 6.0
+ 
+ 	bounds := [4]m.Float{xmid - dw, xmid + dw, ymid - dw, ymid + dw}
+ 	filename := m.ExecutableNamePng()
+@@ -67,48 +78,115 @@ func main() {
+ 		}
+ 	}
+ 
+-	ctx := gg.NewContext(width, width)
+-	// set black background
+-	ctx.SetColor(color.NRGBA{0, 0, 0, 255})
+-	ctx.DrawRectangle(0, 0, float64(width), float64(width))
+-	ctx.Fill()
++	//pts := TransformPoints([]m.Vec2{m.Vec2Zero}, depth)
++	pts := TransformPoints([]m.Vec2{a, b, c}, depth)
++	println("transformed")
++	pts = m.BSplineAdaptive(pts, smoothness, 1.0/400.0)
++	println("bsplined")
++
++	//ctx := gg.NewContext(width, width)
++	//// set black background
++	//ctx.SetColor(color.NRGBA{0, 0, 0, 255})
++	//ctx.DrawRectangle(0, 0, float64(width), float64(width))
++	//ctx.Fill()
+ 
+-	dragon := func(transform m.Matrix3, color color.Color) {
++	outchan := make(chan image.Image, 12)
++	var wg sync.WaitGroup
+ 
+-		//pts := TransformPoints([]m.Vec2{m.Vec2Zero}, depth)
+-		pts := TransformPoints([]m.Vec2{a, b, c}, depth)
+-		for i, _ := range pts {
++	img := image.NewNRGBA(image.Rect(0, 0, width, width))
++	for y := 0; y < width; y++ {
++		for x := 0; x < width; x++ {
++			img.Set(x, y, color.NRGBA{0, 0, 0, 255})
++		}
++	}
++
++	dragon := func(transform m.Matrix3, linecolor color.Color) {
++		ctx := gg.NewContext(width, width)
++		// set black background
++		ctx.SetColor(color.NRGBA{0, 0, 0, 255})
++		ctx.DrawRectangle(0, 0, float64(width), float64(width))
++		ctx.Fill()
++
++		pts2 := make([]m.Vec2, len(pts))
++		for i := 0; i < len(pts); i++ {
+ 			p := transform.TransformPoint(&pts[i])
+ 			x, y := m.WindowTransformPoint(width, p, bounds)
+-			pts[i] = m.Vec2{m.Float(x), m.Float(y)}
++			pts2[i] = m.Vec2{m.Float(x), m.Float(y)}
+ 		}
+-		pts = m.BSplineAdaptive(pts, smoothness, 1.0)
+-		//pts = m.BSplineAdaptive(pts, 0, 10.0)
+-		//for i := 0; i < smoothness*5; i++ {
+-		//	pts = m.BSplineAverage(pts)
+-		//}
+-
+-		//ctx.SetColor(color.NRGBA{255, 255, 255, 255})
+-		ctx.SetColor(color)
++		ctx.SetColor(linecolor)
+ 		ctx.SetLineWidth(line_thickness)
+-		for i, p := range pts {
+-			if i+1 == len(pts) {
++		for i, p := range pts2 {
++			if i+1 == len(pts2) {
+ 				break
+ 			}
+ 			x1 := p.X
+ 			y1 := p.Y
+-			x2 := pts[i+1].X
+-			y2 := pts[i+1].Y
++			x2 := pts2[i+1].X
++			y2 := pts2[i+1].Y
+ 			ctx.DrawLine(x1, y1, x2, y2)
+ 		}
+ 		ctx.Stroke()
++
++		outchan <- ctx.Image()
++		im := ctx.Image()
++		for y := 0; y < width; y++ {
++			for x := 0; x < width; x++ {
++				r, g, b, _ := im.At(x, y).RGBA()
++				if r != 0 && g != 0 && b != 0 {
++					img.Set(x, y, im.At(x, y))
++				}
++			}
++		}
++		wg.Done()
+ 	}
+ 
+ 	// do 4 rotations with different colors
+-	dragon(m.Matrix3Identity, color.NRGBA{255, 35, 24, 255})
+-	dragon(m.Rotate2D(-1, 0, math.Pi/2), color.NRGBA{255,133, 24, 255})
+-	dragon(m.Rotate2D(-1, 0, math.Pi), color.NRGBA{ 23,206,224, 255})
+-	dragon(m.Rotate2D(-1, 0, math.Pi*3.0/2.0), color.NRGBA{ 22,237, 48, 255})
++	red := color.NRGBA{255, 35, 24, 255}
++	orange := color.NRGBA{255, 133, 24, 255}
++	green := color.NRGBA{22, 237, 48, 255}
++	blue := color.NRGBA{23, 206, 224, 255}
++	go dragon(m.Matrix3Identity, red)
++	go dragon(m.Rotate2D(-1, 0, math.Pi/2), orange)
++	go dragon(m.Rotate2D(-1, 0, math.Pi), green)
++	go dragon(m.Rotate2D(-1, 0, math.Pi*3.0/2.0), blue)
++	wg.Add(4)
++
++	go dragon(m.Rotate2D(1, 0, math.Pi*3.0/2.0), blue)
++	go dragon(m.Rotate2D(1, 0, math.Pi), green)
++	go dragon(m.Rotate2D(1, 0, math.Pi/2), orange)
++	wg.Add(3)
++
++	wg.Wait()
++
++	//ctx := gg.NewContext(width, width)
++	//// set black background
++	//ctx.SetColor(color.NRGBA{0, 0, 0, 255})
++	//ctx.DrawRectangle(0, 0, float64(width), float64(width))
++	//ctx.Fill()
++
++	//img := image.NewNRGBA(image.Rect(0, 0, width, width))
++	//for y := 0; y < width; y++ {
++	//	for x := 0; x < width; x++ {
++	//		img.Set(x, y, color.NRGBA{0, 0, 0, 255})
++	//	}
++	//}
++	//println("merging")
++	//for i := 0; i < 7; i++ {
++	//	im := <-outchan
++	//	for y := 0; y < width; y++ {
++	//		for x := 0; x < width; x++ {
++	//			_, _, _, alpha := im.At(x, y).RGBA()
++	//			if alpha != 0 {
++	//				img.Set(x, y, im.At(x, y))
++	//			}
++	//		}
++	//	}
++	//}
+ 
+-	m.Die(ctx.SavePNG(filename))
++	println("saving")
++	//m.Die(ctx.SavePNG(filename))
++	file, err := os.Create(filename)
++	m.Die(err)
++	m.Die(png.Encode(file, img))
++	m.Die(file.Close())
+ }
+base64 -d << EOF | gunzip
+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
+PE9liccTnk+bzn91bi2+bxQAAA==
+EOF
