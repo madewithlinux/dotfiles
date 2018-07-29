@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LOG="$HOME/.backup_logs/remote-backup-$(date +'%Y-%m-%d_%H.%M')"
+LOG="$HOME/.backup_logs/remote-backup-$(date +'%Y-%m-%d_%H.%M').txt"
 source $HOME/.b2_secrets
 
 echo "$(date) starting remote backup" >> $LOG
@@ -15,7 +15,9 @@ duplicity \
 	--full-if-older-than 1M \
 	/home/j0sh \
 	"b2://${B2_ACCOUNT_ID}:${B2_APPLICATION_KEY}@home-j0sh-backup/" \
-	>> $LOG
+	>> $LOG 2>&1
+
+echo "$(date) finished duplicity remote backup" >> $LOG
 
 rclone sync \
 	/home/j0sh \
@@ -27,6 +29,6 @@ rclone sync \
 	--exclude $HOME/.cache/ \
 	--exclude $HOME/Downloads/stuff/ \
 	--exclude $HOME/.local/share/Trash/ \
-	>> $LOG
+	>> $LOG 2>&1
 
-echo "$(date) finished remote backup" >> $LOG
+echo "$(date) finished rclone remote backup" >> $LOG

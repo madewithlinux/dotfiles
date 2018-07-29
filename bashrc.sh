@@ -1,4 +1,4 @@
-# (c) Copyright 2017 Josh Wright
+# (c) Copyright 2018 Josh Wright
 # bashrc
 
 if [[ "$MARKER_BASH_PROFILE" != "2" ]]; then
@@ -66,7 +66,8 @@ alias copy='xsel -ib'
 alias paste='xsel -ob'
 alias qr='paste|qrencode -t ANSI -m 2'
 alias qrimage='xsel -ob|qrencode -t PNG -o - -s 80|feh -Z - -.'
-alias copyTime='date "+%Y/%m/%d %I:%M:%S %p"|xsel -ib'
+alias copyTime='echo -n `date "+%Y/%m/%d %I:%M:%S %p"`|xsel -ib'
+alias filenameDate='echo -n `date "+%Y%m%d-%H%M%S"`|xsel -ib; date "+%Y%m%d-%H%M%S"'
 alias updatedb='sudo updatedb'
 alias powertop='sudo powertop'
 alias drop_caches='echo 3 |sudo tee /proc/sys/vm/drop_caches'

@@ -8,9 +8,9 @@ info() {
 }
 
 if [[ "$1" == "short" ]]; then
-	echo "base64 -d << EOF | gunzip"
-	info | gzip -9 | base64
-	echo "EOF"
+	echo -n "echo "
+	echo -n $(info | gzip -9 | base64 |tr -d '\n')
+	echo "|base64 -d|gunzip"
 else
 	info
 	# in tests, gzip has best compression for these small text snippets

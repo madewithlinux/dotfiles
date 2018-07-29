@@ -30,23 +30,23 @@ source_if_exists "$HOME/Dropbox/.bashrc_private" # stuff that doesn't belong on 
 source_if_exists "$HOME/.bash_profile_local" # system-specific stuff
 export PATH="$PATH:/sbin:/usr/sbin"
 export PATH="/opt/cmake/bin:$PATH"
-export PATH="/opt/ghc/8.0.1/bin/:$PATH"
-PATHS=(
-    "$HOME/bin/"
-    "$HOME/Dropbox/bin"
-    "$HOME/.local/bin/"
-    "/usr/local/go/bin/"
-    "/opt/cmake/bin/"
-    "$HOME/.go/bin"
-    "$HOME/.cabal/bin"
-    "$HOME/.cargo/bin"
-    "$HOME/.npm-global/bin"
-)
-for path in "${PATHS[@]}"; do
-    if folder_exists $path; then
-        export PATH="$path:$PATH"
-    fi
-done
+# export PATH="/opt/ghc/8.0.1/bin/:$PATH"
+# PATHS=(
+#     "$HOME/bin/"
+#     "$HOME/Dropbox/bin"
+#     "$HOME/.local/bin/"
+#     "/usr/local/go/bin/"
+#     "/opt/cmake/bin/"
+#     "$HOME/.go/bin"
+#     "$HOME/.cabal/bin"
+#     "$HOME/.cargo/bin"
+#     "$HOME/.npm-global/bin"
+# )
+# for path in "${PATHS[@]}"; do
+#     if folder_exists $path; then
+#         export PATH="$path:$PATH"
+#     fi
+# done
 export EDITOR="vim"
 export TERMINAL="st"
 # need this for tmux to use 256 colors
@@ -66,4 +66,4 @@ fi
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
