@@ -34,7 +34,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 # tab-completion:
 if [[ -f "$HOME/Dropbox/.tmux.completion.bash.txt" ]]; then
-	source "$HOME/Dropbox/.tmux.completion.bash.txt"
+    source "$HOME/Dropbox/.tmux.completion.bash.txt"
 fi
 
 complete -cf sudo
@@ -95,12 +95,14 @@ alias tamu_only_vpn='sudo openconnect connect.tamu.edu --authgroup tunnel_tamu_t
 ## functions  ##
 ################
 # allow us to set title in tmux
+__USER_SET_TITLE=0
 title() {
-	if [[ "$TMUX" != "" ]]; then
-		tmux set -g set-titles-string "$*"
-	else
-		echo -en "\033]0;${*}\a"
-	fi
+    if [[ "$TMUX" != "" ]]; then
+        tmux set -g set-titles-string "$*"
+    else
+        echo -en "\033]0;${*}\a"
+    fi
+    __USER_SET_TITLE=1
 }
 build_tex() {
     mkdir -p .latex
@@ -115,32 +117,32 @@ watch_tex() {
         mkdir -p .latex
         pdflatex --halt-on-error -output-directory=.latex -aux-directory=.latex $1
         echo "${1%.tex}.pdf"
-	    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile="${1%.tex}.pdf" .latex/"${1%.tex}.pdf"
+        gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile="${1%.tex}.pdf" .latex/"${1%.tex}.pdf"
     done
 }
 mpv_get_time() {
-	  echo '{ "command": ["get_property", "time-pos"] }'       |socat - /tmp/mpvsocket |python -c 'import sys,json; print(json.load(sys.stdin)["data"])'
+      echo '{ "command": ["get_property", "time-pos"] }'       |socat - /tmp/mpvsocket |python -c 'import sys,json; print(json.load(sys.stdin)["data"])'
 }
 mpv_set_time() {
-	  echo '{ "command": ["set_property", "time-pos", '$1'] }' |socat - /tmp/mpvsocket
+      echo '{ "command": ["set_property", "time-pos", '$1'] }' |socat - /tmp/mpvsocket
 }
 mpv_pause() {
-	  echo '{ "command": ["set_property", "pause", true] }'    |socat - /tmp/mpvsocket
+      echo '{ "command": ["set_property", "pause", true] }'    |socat - /tmp/mpvsocket
 }
 mpv_quit() {
-	  echo '{ "command": ["quit"] }'                           |socat - /tmp/mpvsocket
+      echo '{ "command": ["quit"] }'                           |socat - /tmp/mpvsocket
 }
 remove_detached_tmux() {
-	  # kills tmux sessions that are not attached and have only 1 window
-	  IFS=$'\n'
-	  # if it isn't attached
-	  for x in $(tmux ls |grep -v '(attached)'); do
-		    # if it only has 1 window
-		    if [[ "$(echo $x|cut -f 2 -d ' ')" == "1" ]]; then
-			      # tell tmux to kill it
-	          tmux kill-session -t "$(echo $x|cut -f 1 -d :)"
-	      fi
-	  done
+      # kills tmux sessions that are not attached and have only 1 window
+      IFS=$'\n'
+      # if it isn't attached
+      for x in $(tmux ls |grep -v '(attached)'); do
+            # if it only has 1 window
+            if [[ "$(echo $x|cut -f 2 -d ' ')" == "1" ]]; then
+                  # tell tmux to kill it
+              tmux kill-session -t "$(echo $x|cut -f 1 -d :)"
+          fi
+      done
 }
 
 
@@ -153,15 +155,15 @@ remove_detached_tmux() {
 COLOR_RED_BOLD="\[\e[1;33m\]"
 # COLOR_BG="\[\e[48;5;252m\]"
 if [[ "$(hostname)" == "j0sh-ThinkPad-T450s" ]]; then
-	COLOR_BG="\[\e[47m\]"
+    COLOR_BG="\[\e[47m\]"
 else
-	COLOR_BG="\[\e[48;5;237m\]"
+    COLOR_BG="\[\e[48;5;237m\]"
 fi
 COLOR_TIME="\[\e[1;32m\]"
 if [[ "$USER" == "root" ]]; then
-	COLOR_USER="\[\e[1;31m\]"
+    COLOR_USER="\[\e[1;31m\]"
 else
-	COLOR_USER="\[\e[1;34m\]"
+    COLOR_USER="\[\e[1;34m\]"
 fi
 COLOR_PATH="\[\e[1;35m\]"
 COLOR_NONE="\[\e[0m\]"
@@ -177,11 +179,16 @@ function _prompt_command() {
     else
       PS1="${COLOR_BG}${COLOR_TIME}$(date +%I:%M%p)${PS1_static}"
     fi
+    if [[ $__USER_SET_TITLE == 0 ]]; then
+        # title "$USER@$(hostname):$(basename $(pwd))"
+        title "$(basename $(pwd))"
+        __USER_SET_TITLE=0
+    fi
 }
 PROMPT_COMMAND=_prompt_command
 
 source_if_exists "/usr/share/modules/init/bash"
 if type module > /dev/null 2>&1; then
-	module load use.own
+    module load use.own
 fi
 source_if_exists "$HOME/.bashrc_local"
