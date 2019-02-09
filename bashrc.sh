@@ -192,3 +192,6 @@ if type module > /dev/null 2>&1; then
     module load use.own
 fi
 source_if_exists "$HOME/.bashrc_local"
+
+export FZF_COMPLETION_TRIGGER='~~'
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
