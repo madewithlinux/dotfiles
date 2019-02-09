@@ -26,7 +26,6 @@ set modeline
 set modelines=5
 set cursorline
 
-
 " Enable per-command history.
 " CTRL-N and CTRL-P will be automatically bound to next-history and
 " previous-history instead of down and up. If you don't like the change,
@@ -36,23 +35,17 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 let g:deoplete#enable_at_startup = 1
 
 call plug#begin('~/.vim/plugged')
-
 Plug 'junegunn/vim-easy-align'
-
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'sunaku/vim-shortcut'
-
 Plug 'scrooloose/nerdtree'
-
 Plug 'SirVer/ultisnips' 
 Plug 'honza/vim-snippets'
-
 Plug 'terryma/vim-multiple-cursors'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
 Plug 'tpope/vim-commentary'
-
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 
@@ -104,7 +97,9 @@ Shortcut command
 
 " windows
 Shortcut delete window
-      \ noremap <silent> <Space>wd <C-w>q
+      \ noremap <silent> <Space>wd :close<CR>
+Shortcut maximize window
+      \ noremap <silent> <Space>wm :hide<CR>
 Shortcut switch window h
       \ noremap <silent> <Space>wh <C-w>h
 Shortcut switch window j
@@ -118,6 +113,10 @@ Shortcut toggle NERDTree
     \ noremap <silent> <Space>ft :NERDTreeToggle<CR>
 Shortcut toggle NERDTree
     \ noremap <silent> <Space>tf :NERDTreeToggle<CR>
+
+Shortcut select color theme
+    \ noremap <silent> <Space>ts :Colors<CR>
+
 
 """"""""""""""""""""""""""""
 
