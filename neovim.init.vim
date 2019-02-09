@@ -13,10 +13,12 @@ set nospell spelllang=en_us
 syntax on
 
 set completeopt=longest,menuone
+set completeopt+=noselect
+set completeopt+=noinsert
 
 " fancy tab-completion menu in vim cmdline
-"set wildmenu
-"set wildmode=full
+" set wildmenu
+" set wildmode=full
 
 " check for modelines (whthin the top 5 lines of a file?)
 " not security-good for editing files from sketchy sources
@@ -49,6 +51,8 @@ Plug 'honza/vim-snippets'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
+Plug 'tpope/vim-commentary'
+
 call plug#end()
 
 
@@ -60,7 +64,21 @@ call plug#end()
 source /home/j0sh/.vim/plugged/vim-shortcut/plugin/shortcut.vim
 "source ~/.config/nvim/plugin/shortcuts.vim
 
+" inert mode movement
 inoremap fd <ESC>
+"inoremap <C-h> <C-o>h
+"inoremap <C-j> <C-o>j
+"inoremap <C-k> <C-o>k
+"inoremap <C-l> <C-o>l
+inoremap <C-d> <C-o><C-d>
+inoremap <C-u> <C-o><C-u>
+
+for key in ['h', 'j', 'k', 'l', '0']
+    execute 'inoremap <C-'.key.'> <C-o>'.key
+endfor
+
+
+
 Shortcut save
     \ noremap <silent> <Space>fs :w<CR>
 Shortcut last buffer
@@ -98,6 +116,8 @@ Shortcut switch window l
 
 Shortcut toggle NERDTree
     \ noremap <silent> <Space>ft :NERDTreeToggle<CR>
+Shortcut toggle NERDTree
+    \ noremap <silent> <Space>tf :NERDTreeToggle<CR>
 
 """"""""""""""""""""""""""""
 
@@ -124,4 +144,5 @@ Shortcut convert single to double quotes at cursor
 
 Shortcut save file as...
     \ nnoremap <silent> <space>yf :call feedkeys(":saveas %\t", "t")<return>
+
 
