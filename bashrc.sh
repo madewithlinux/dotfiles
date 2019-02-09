@@ -181,7 +181,7 @@ function _prompt_command() {
     fi
     if [[ $__USER_SET_TITLE == 0 ]]; then
         # title "$USER@$(hostname):$(basename $(pwd))"
-        title "$(basename $(pwd))"
+        title "$(basename "$(pwd)")"
         __USER_SET_TITLE=0
     fi
 }

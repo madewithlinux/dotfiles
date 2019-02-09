@@ -67,3 +67,4 @@ fi
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+# if [ -e /home/j0sh/.nix-profile/etc/profile.d/nix.sh ]; then . /home/j0sh/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
