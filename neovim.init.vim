@@ -52,6 +52,8 @@ Plug 'tpope/vim-commentary'
 Plug 'sheerun/vim-polyglot'
 Plug 'liuchengxu/vim-which-key'
 Plug 'wsdjeg/FlyGrep.vim'
+Plug 'zchee/deoplete-jedi'
+Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 " insert mode movement
@@ -68,6 +70,8 @@ endfor
 
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
+" use different leader for easymotion
+map , <Plug>(easymotion-prefix)
 
 set timeout
 set timeoutlen=500
@@ -98,7 +102,7 @@ let g:which_key_map['w'] = {
     \ }
 
 let g:which_key_map['t'] = {
-    \ 'name' : 'toggle' ,
+    \ 'name' : '+toggle' ,
     \ 'f': ['NERDTreeToggle'             , 'toggle NERDTree']     ,
     \ 'n': ['set number!'                , 'toggle line numbers'] ,
     \ 's': ['Colors'                     , 'select color theme']  ,
@@ -107,18 +111,22 @@ let g:which_key_map['t'] = {
     \ }
 
 let g:which_key_map['s'] = {
-    \ 'name' : 'source',
+    \ 'name' : '+search',
     \ 'o': [':w|source ~/.config/nvim/init.vim\<CR>' , 'source config'],
-    \ 's': [':w! ~/scratch\<CR>' , 'write selection to ~/scratch'],
     \ '/': ['FlyGrep' , 'fly grep search'],
     \ 'b': ['BLines' , 'search buffer'],
+    \ 'a': ['BLines' , 'search all buffers'],
     \ 'c': ['nohl' , 'clear highlight'],
+    \ 'p': ['Files' , 'find file'],
+    \ 'g': ['GFiles' , 'find git-tracked file'],
+    \ 'k': ['Maps', 'search normal mode keymap'],
     \ }
 
 let g:which_key_map['f'] = {
-    \ 'name' : 'file',
+    \ 'name' : '+file',
     \ 'e': [':so ~/.config/nvim/init.vim\<CR>' , 'source config']       ,
     \ 's': ['w'                                , 'save']                ,
+    \ 'c': [':w! ~/scratch\<CR>' , 'write selection to ~/scratch'],
     \ 'd': ['NERDTreeFind', 'find file in NERDTree'],
     \ 't': ['NERDTreeToggle'                   , 'toggle NERDTree']     ,
     \ }
@@ -126,13 +134,14 @@ let g:which_key_map['f'] = {
 let g:which_key_map['p'] = {
     \ 'name' : '+project',
     \ 'f': ['Files' , 'find file'],
+    \ 'g': ['GFiles' , 'find git-tracked file'],
     \ }
 
 let g:which_key_map['b'] = {
     \ 'name' : '+buffer',
     \ 'b': ['Buffers' , 'find buffer'],
+    \ 'd': ['bd' , 'delete (kill) buffer'],
     \ }
-
 
 call which_key#register('<Space>', "g:which_key_map")
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
