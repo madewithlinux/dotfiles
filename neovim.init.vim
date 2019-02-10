@@ -109,6 +109,7 @@ let g:which_key_map['t'] = {
 let g:which_key_map['s'] = {
     \ 'name' : 'source',
     \ 'o': [':w|source ~/.config/nvim/init.vim\<CR>' , 'source config'],
+    \ 's': [':w! ~/scratch\<CR>' , 'write selection to ~/scratch'],
     \ '/': ['FlyGrep' , 'fly grep search'],
     \ 'b': ['BLines' , 'search buffer'],
     \ 'c': ['nohl' , 'clear highlight'],
