@@ -98,10 +98,10 @@ let g:which_key_map['w'] = {
 
 let g:which_key_map['t'] = {
     \ 'name' : '+toggle' ,
-    \ 'f':  ['NERDTreeToggle'             , 'toggle NERDTree']     ,
-    \ 's':  ['Colors'                     , 'select color theme']  ,
-    \ 'w':  [':set list\<CR>'                  , 'show whitespace']   ,
-    \ 'nw':  [':set nolist\<CR>'                  , 'hide whitespace']   ,
+    \ 'f': ['NERDTreeToggle'             , 'toggle NERDTree']     ,
+    \ 's': ['Colors'                     , 'select color theme']  ,
+    \ 'w': [':set list\<CR>'                  , 'show whitespace']   ,
+    \ 'nw': [':set nolist\<CR>'                  , 'hide whitespace']   ,
     \ 'p':  [':set paste\<CR>',   'set paste']   ,
     \ 'np': [':set nopaste\<CR>', 'unset paste']   ,
     \ 'l': [':set number\<CR>'                , 'show line numbers'] ,
