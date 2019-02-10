@@ -10,6 +10,7 @@ set breakindent linebreak
 set spellfile=~/.config/nvim/spell/en.utf-8.add
 set nospell spelllang=en_us 
 set hidden
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 
 filetype on        " Enable the plugin.
 filetype indent on " Better indentation.
@@ -26,12 +27,6 @@ colorscheme morning
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-" set completeopt=longest,menuone
-" set completeopt+=noselect
-" set completeopt+=noinsert
-" set wildmode=longest:full,list,full
-" set wildmode=full
-" set wildmenu
 set wildchar=<Tab> wildmenu wildmode=longest,list
 
 let g:UltiSnipsExpandTrigger = "\<C-Tab>"
@@ -103,11 +98,14 @@ let g:which_key_map['w'] = {
 
 let g:which_key_map['t'] = {
     \ 'name' : '+toggle' ,
-    \ 'f': ['NERDTreeToggle'             , 'toggle NERDTree']     ,
-    \ 'n': ['set number!'                , 'toggle line numbers'] ,
-    \ 's': ['Colors'                     , 'select color theme']  ,
-    \ 'w': ['set list!'                  , 'toggle whitespace']   ,
-    \ 'p': ['set paste!'                 , 'toggle paste']   ,
+    \ 'f':  ['NERDTreeToggle'             , 'toggle NERDTree']     ,
+    \ 's':  ['Colors'                     , 'select color theme']  ,
+    \ 'w':  [':set list\<CR>'                  , 'show whitespace']   ,
+    \ 'nw':  [':set nolist\<CR>'                  , 'hide whitespace']   ,
+    \ 'p':  [':set paste\<CR>',   'set paste']   ,
+    \ 'np': [':set nopaste\<CR>', 'unset paste']   ,
+    \ 'l': [':set number\<CR>'                , 'show line numbers'] ,
+    \ 'nl': [':set nonumber\<CR>'                , 'hide line numbers'] ,
     \ }
 
 let g:which_key_map['s'] = {
@@ -116,11 +114,13 @@ let g:which_key_map['s'] = {
     \ '/': ['FlyGrep' , 'fly grep search'],
     \ 'b': ['BLines' , 'search buffer'],
     \ 'a': ['BLines' , 'search all buffers'],
-    \ 'c': ['nohl' , 'clear highlight'],
     \ 'p': ['Files' , 'find file'],
     \ 'g': ['GFiles' , 'find git-tracked file'],
     \ 'k': ['Maps', 'search normal mode keymap'],
+    \ 'h': ['History', 'search file history'],
+    \ 'c': [':History:\<CR>', 'search command history'],
     \ }
+    "\ 'c': ['nohl' , 'clear highlight'],
 
 let g:which_key_map['f'] = {
     \ 'name' : '+file',
