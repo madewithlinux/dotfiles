@@ -98,7 +98,7 @@ alias tamu_only_vpn='sudo openconnect connect.tamu.edu --authgroup tunnel_tamu_t
 __USER_SET_TITLE=0
 title() {
     if [[ "$TMUX" != "" ]]; then
-        tmux set -g set-titles-string "$*"
+        tmux set set-titles-string "$*"
     else
         echo -en "\033]0;${*}\a"
     fi
