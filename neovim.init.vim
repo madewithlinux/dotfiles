@@ -2,22 +2,20 @@
 
 set nocompatible " be iMproved, required
 "set relativenumber
+syntax on
 set number
 set cursorline
-
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set breakindent linebreak
 set spellfile=~/.config/nvim/spell/en.utf-8.add
 set nospell spelllang=en_us 
+set hidden
 
-syntax on
+filetype on        " Enable the plugin.
+filetype indent on " Better indentation.
+filetype plugin on " Load filetype specific plugins
 
-set completeopt=longest,menuone
-set completeopt+=noselect
-set completeopt+=noinsert
-set wildmode=longest:full,list,full
-set wildmenu
-set wildchar=<Tab>
+
 
 set termguicolors
 colorscheme morning
@@ -27,7 +25,19 @@ colorscheme morning
 " previous-history instead of down and up. If you don't like the change,
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+" set completeopt=longest,menuone
+" set completeopt+=noselect
+" set completeopt+=noinsert
+" set wildmode=longest:full,list,full
+" set wildmode=full
+" set wildmenu
+set wildchar=<Tab> wildmenu wildmode=longest,list
+
+let g:UltiSnipsExpandTrigger = "\<C-Tab>"
 let g:deoplete#enable_at_startup = 1
+inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-easy-align'
@@ -41,8 +51,8 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-commentary'
 Plug 'sheerun/vim-polyglot'
 Plug 'liuchengxu/vim-which-key'
+Plug 'wsdjeg/FlyGrep.vim'
 call plug#end()
-
 
 " insert mode movement
 inoremap fd <ESC>
@@ -52,6 +62,10 @@ for key in ['h', 'j', 'k', 'l', '0']
     execute 'inoremap <C-'.key.'> <C-o>'.key
 endfor
 
+" inoremap <C-j>
+"     \ pumvisible() ? "\<C-n>" : "\<C-o>\<C-j>"
+" inoremap <C-k> pumvisible() ? "\<C-p>" : "\<C-o>\<C-k>"
+
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
 
@@ -59,6 +73,7 @@ set timeout
 set timeoutlen=500
 let g:which_key_map = {}
 let g:which_key_map[' '] = ['Command', 'run command']
+let g:which_key_map['<Tab>'] = [':b#\<CR>', 'last buffer']
 
 let g:which_key_map['w'] = {
     \ 'name' : '+windows' ,
@@ -93,14 +108,28 @@ let g:which_key_map['t'] = {
 
 let g:which_key_map['s'] = {
     \ 'name' : 'source',
-    \ 'o': [':wa|source ~/.config/nvim/init.vim\<CR>' , 'source config'],
+    \ 'o': [':w|source ~/.config/nvim/init.vim\<CR>' , 'source config'],
+    \ '/': ['FlyGrep' , 'fly grep search'],
+    \ 'b': ['BLines' , 'search buffer'],
+    \ 'c': ['nohl' , 'clear highlight'],
     \ }
 
 let g:which_key_map['f'] = {
     \ 'name' : 'file',
     \ 'e': [':so ~/.config/nvim/init.vim\<CR>' , 'source config']       ,
     \ 's': ['w'                                , 'save']                ,
+    \ 'd': ['NERDTreeFind', 'find file in NERDTree'],
     \ 't': ['NERDTreeToggle'                   , 'toggle NERDTree']     ,
+    \ }
+
+let g:which_key_map['p'] = {
+    \ 'name' : '+project',
+    \ 'f': ['Files' , 'find file'],
+    \ }
+
+let g:which_key_map['b'] = {
+    \ 'name' : '+buffer',
+    \ 'b': ['Buffers' , 'find buffer'],
     \ }
 
 
