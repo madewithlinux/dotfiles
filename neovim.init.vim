@@ -15,6 +15,12 @@ syntax on
 set completeopt=longest,menuone
 set completeopt+=noselect
 set completeopt+=noinsert
+set wildmode=longest:full,list,full
+set wildmenu
+set wildchar=<Tab>
+
+set termguicolors
+colorscheme morning
 
 " fancy tab-completion menu in vim cmdline
 " set wildmenu
@@ -46,6 +52,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-commentary'
 Plug 'sheerun/vim-polyglot'
+Plug 'liuchengxu/vim-which-key'
 call plug#end()
 
 
@@ -70,78 +77,65 @@ for key in ['h', 'j', 'k', 'l', '0']
     execute 'inoremap <C-'.key.'> <C-o>'.key
 endfor
 
+let g:mapleader = "\<Space>"
+let g:maplocalleader = ','
+
+" nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+" nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+" nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 
 
-Shortcut save
-    \ noremap <silent> <Space>fs :w<CR>
-Shortcut last buffer
-    \ noremap <silent> <Space>bb :Buffers<CR>
-Shortcut last buffer
-    \ noremap <silent> <Space><Tab> :b#<CR>
-Shortcut search files
-    \ noremap <silent> <Space>pf :Files<CR>
-Shortcut source config
-    \ noremap <silent> <Space>so :so ~/.config/nvim/init.vim<CR>
-Shortcut source config
-    \ noremap <silent> <Space>feR :so ~/.config/nvim/init.vim<CR>
-Shortcut toggle whitespace
-    \ noremap <silent> <Space>tw :set list!<CR>
-Shortcut toggle line numbers
-    \ noremap <silent> <Space>tn :set number!<CR>
-Shortcut show shortcut menu and run chosen shortcut
-      \ noremap <silent> <Space><Space> :Shortcuts<Return>
-Shortcut fallback to shortcut menu on partial entry
-      \ noremap <silent> <Space> :Shortcuts<Return>
-Shortcut command
-      \ noremap <silent> <Space>c :Command<Return>
+set timeout
+set timeoutlen=500
+let g:which_key_map = {}
+let g:which_key_map[' '] = ['Command', 'run command']
 
-" windows
-Shortcut delete window
-      \ noremap <silent> <Space>wd :close<CR>
-Shortcut maximize window
-      \ noremap <silent> <Space>wm :hide<CR>
-Shortcut switch window h
-      \ noremap <silent> <Space>wh <C-w>h
-Shortcut switch window j
-      \ noremap <silent> <Space>wj <C-w>j
-Shortcut switch window k
-      \ noremap <silent> <Space>wk <C-w>k
-Shortcut switch window l
-      \ noremap <silent> <Space>wl <C-w>l
+let g:which_key_map['w'] = {
+    \ 'name' : '+windows' ,
+    \ 'w' : ['<C-W>w'     , 'other-window']          ,
+    \ 'd' : ['<C-W>c'     , 'delete-window']         ,
+    \ '-' : ['<C-W>s'     , 'split-window-below']    ,
+    \ '|' : ['<C-W>v'     , 'split-window-right']    ,
+    \ '2' : ['<C-W>v'     , 'layout-double-columns'] ,
+    \ 'h' : ['<C-W>h'     , 'window-left']           ,
+    \ 'j' : ['<C-W>j'     , 'window-below']          ,
+    \ 'l' : ['<C-W>l'     , 'window-right']          ,
+    \ 'k' : ['<C-W>k'     , 'window-up']             ,
+    \ 'H' : ['<C-W>5<'    , 'expand-window-left']    ,
+    \ 'J' : ['resize +5'  , 'expand-window-below']   ,
+    \ 'L' : ['<C-W>5>'    , 'expand-window-right']   ,
+    \ 'K' : ['resize -5'  , 'expand-window-up']      ,
+    \ '=' : ['<C-W>='     , 'balance-window']        ,
+    \ 's' : ['<C-W>s'     , 'split-window-below']    ,
+    \ 'v' : ['<C-W>v'     , 'split-window-below']    ,
+    \ '?' : ['Windows'    , 'fzf-window']            ,
+    \ 'm':  ['hide'   , 'maximize window']       ,
+    \ }
 
-Shortcut toggle NERDTree
-    \ noremap <silent> <Space>ft :NERDTreeToggle<CR>
-Shortcut toggle NERDTree
-    \ noremap <silent> <Space>tf :NERDTreeToggle<CR>
+let g:which_key_map['t'] = {
+    \ 'name' : 'toggle' ,
+    \ 'f': ['NERDTreeToggle'             , 'toggle NERDTree']     ,
+    \ 'n': ['set number!'                , 'toggle line numbers'] ,
+    \ 's': ['Colors'                     , 'select color theme']  ,
+    \ 'w': ['set list!'                  , 'toggle whitespace']   ,
+    \ 'p': ['set paste!'                 , 'toggle paste']   ,
+    \ }
 
-Shortcut select color theme
-    \ noremap <silent> <Space>ts :Colors<CR>
+let g:which_key_map['s'] = {
+    \ 'name' : 'source',
+    \ 'o': [':wa|source ~/.config/nvim/init.vim\<CR>' , 'source config'],
+    \ }
+
+let g:which_key_map['f'] = {
+    \ 'name' : 'file',
+    \ 'e': [':so ~/.config/nvim/init.vim\<CR>' , 'source config']       ,
+    \ 's': ['w'                                , 'save']                ,
+    \ 't': ['NERDTreeToggle'                   , 'toggle NERDTree']     ,
+    \ }
 
 
-""""""""""""""""""""""""""""
-
-Shortcut indent with tabs in buffer
-      \ nnoremap <silent> <Space>f<Tab> :call Format_tabs_indentation()<CR>
-
-Shortcut indent with spaces in buffer
-      \ nnoremap <silent> <Space>f<Space> :call Format_spaces_indentation()<CR>
-
-Shortcut format as separator, appending equal signs to end of line
-      \ nnoremap <silent> <Space>f= :call Format_separator_equal_sign()<CR>
-
-Shortcut format as separator, appending minus signs to end of line
-      \ nnoremap <silent> <Space>f- :call Format_separator_minus_sign()<CR>
-
-Shortcut format as separator, repeating last character to end of line
-      \ nnoremap <silent> <Space>f_ :call Format_separator_repeat_eol()<CR>
-
-Shortcut convert double to single quotes at cursor
-      \ nnoremap <silent> <Space>f' :call Format_quotes_singularize()<CR>
-
-Shortcut convert single to double quotes at cursor
-      \ nnoremap <silent> <Space>f" :call Format_quotes_pluralize()<CR>
-
-Shortcut save file as...
-    \ nnoremap <silent> <space>yf :call feedkeys(":saveas %\t", "t")<return>
+call which_key#register('<Space>', "g:which_key_map")
+nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
+vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 
 
