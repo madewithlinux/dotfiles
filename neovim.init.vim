@@ -3,7 +3,7 @@
 set nocompatible " be iMproved, required
 "set relativenumber
 set number
-set autochdir
+set cursorline
 
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set breakindent linebreak
@@ -22,29 +22,17 @@ set wildchar=<Tab>
 set termguicolors
 colorscheme morning
 
-" fancy tab-completion menu in vim cmdline
-" set wildmenu
-" set wildmode=full
-
-" check for modelines (whthin the top 5 lines of a file?)
-" not security-good for editing files from sketchy sources
-set modeline
-set modelines=5
-set cursorline
-
 " Enable per-command history.
 " CTRL-N and CTRL-P will be automatically bound to next-history and
 " previous-history instead of down and up. If you don't like the change,
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
-
 let g:deoplete#enable_at_startup = 1
 
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'sunaku/vim-shortcut'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips' 
 Plug 'honza/vim-snippets'
@@ -56,34 +44,16 @@ Plug 'liuchengxu/vim-which-key'
 call plug#end()
 
 
-
-
-"imap <c-Space> <plug>(fzf-complete-word)
-
-" yes it is needful to maually source the vim plugin
-source /home/j0sh/.vim/plugged/vim-shortcut/plugin/shortcut.vim
-"source ~/.config/nvim/plugin/shortcuts.vim
-
-" inert mode movement
+" insert mode movement
 inoremap fd <ESC>
-"inoremap <C-h> <C-o>h
-"inoremap <C-j> <C-o>j
-"inoremap <C-k> <C-o>k
-"inoremap <C-l> <C-o>l
 inoremap <C-d> <C-o><C-d>
 inoremap <C-u> <C-o><C-u>
-
 for key in ['h', 'j', 'k', 'l', '0']
     execute 'inoremap <C-'.key.'> <C-o>'.key
 endfor
 
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
-
-" nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
-" nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-" nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
-
 
 set timeout
 set timeoutlen=500
