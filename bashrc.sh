@@ -194,4 +194,5 @@ fi
 source_if_exists "$HOME/.bashrc_local"
 
 export FZF_COMPLETION_TRIGGER='~~'
+export FZF_DEFAULT_OPTS='--bind ctrl-d:page-down,ctrl-u:page-up'
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
