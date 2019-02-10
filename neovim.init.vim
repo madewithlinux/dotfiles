@@ -49,6 +49,7 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'wsdjeg/FlyGrep.vim'
 Plug 'zchee/deoplete-jedi'
 Plug 'easymotion/vim-easymotion'
+Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 " insert mode movement
@@ -67,6 +68,9 @@ let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
 " use different leader for easymotion
 map , <Plug>(easymotion-prefix)
+
+" for faster gitgutter updates
+set updatetime=100
 
 set timeout
 set timeoutlen=500
