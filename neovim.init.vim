@@ -27,13 +27,17 @@ colorscheme morning
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-set wildchar=<Tab> wildmenu wildmode=longest,list
+" set wildchar=<Tab> wildmenu wildmode=longest,list
+
+" don't put bufferline on the command line bar thing
+let g:bufferline_echo = 0
 
 let g:UltiSnipsExpandTrigger = "\<C-Tab>"
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 
+"" plugins
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -42,15 +46,85 @@ Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips' 
 Plug 'honza/vim-snippets'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-commentary'
 Plug 'sheerun/vim-polyglot'
 Plug 'liuchengxu/vim-which-key'
 Plug 'wsdjeg/FlyGrep.vim'
-Plug 'zchee/deoplete-jedi'
+" Plug 'zchee/deoplete-jedi'
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
+Plug 'vim-airline/vim-airline'
+Plug 'bling/vim-bufferline'
+
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-tagprefix'
+Plug 'https://github.com/ncm2/ncm2-gtags'
+Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
+" Plug 'fgrsnau/ncm-otherbuf'
+Plug 'ncm2/ncm2-ultisnips'
+Plug 'ncm2/ncm2-match-highlight'
+
 call plug#end()
+
+
+
+
+"" completion things
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" IMPORTANT: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+
+" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+" found' messages
+" set shortmess+=c
+
+" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+inoremap <c-c> <ESC>
+
+" When the <Enter> key is pressed while the popup menu is visible, it only
+" hides the menu. Use this mapping to close the menu and also start a new
+" line.
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+" Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" wrap existing omnifunc
+" Note that omnifunc does not run in background and may probably block the
+" editor. If you don't want to be blocked by omnifunc too often, you could
+" add 180ms delay before the omni wrapper:
+"  'on_complete': ['ncm2#on_complete#delay', 180,
+"               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+au User Ncm2Plugin call ncm2#register_source({
+        \ 'name' : 'css',
+        \ 'priority': 9,
+        \ 'subscope_enable': 1,
+        \ 'scope': ['css','scss'],
+        \ 'mark': 'css',
+        \ 'word_pattern': '[\w\-]+',
+        \ 'complete_pattern': ':\s*',
+        \ 'on_complete': ['ncm2#on_complete#delay', 500,
+            \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+        \ })
+
+
+" Press enter key to trigger snippet expansion
+" The parameters are the same as `:help feedkeys()`
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+" c-j c-k for moving in snippet
+" let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
 
 " insert mode movement
 inoremap fd <ESC>
@@ -60,10 +134,8 @@ for key in ['h', 'j', 'k', 'l', '0']
     execute 'inoremap <C-'.key.'> <C-o>'.key
 endfor
 
-" inoremap <C-j>
-"     \ pumvisible() ? "\<C-n>" : "\<C-o>\<C-j>"
-" inoremap <C-k> pumvisible() ? "\<C-p>" : "\<C-o>\<C-k>"
 
+"" space leader key configuration
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
 " use different leader for easymotion
@@ -144,6 +216,8 @@ let g:which_key_map['p'] = {
 let g:which_key_map['b'] = {
     \ 'name' : '+buffer',
     \ 'b': ['Buffers' , 'find buffer'],
+    \ 'p': ['bp' , 'prev buffer'],
+    \ 'n': ['bn' , 'next buffer'],
     \ 'd': ['bd' , 'delete (kill) buffer'],
     \ }
 
