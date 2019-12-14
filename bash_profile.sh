@@ -2,7 +2,7 @@
 # bash_profile
 
 # convenience marker so we can make sure this file has been sourced
-MARKER_BASH_PROFILE=2
+MARKER_BASH_PROFILE=3
 
 ###############
 ## functions ##
@@ -30,6 +30,7 @@ source_if_exists "$HOME/Dropbox/.bashrc_private" # stuff that doesn't belong on 
 source_if_exists "$HOME/.bash_profile_local" # system-specific stuff
 export PATH="$PATH:/sbin:/usr/sbin"
 export PATH="/opt/cmake/bin:$PATH"
+export PATH="$HOME/.npm/bin/:$PATH"
 # export PATH="/opt/ghc/8.0.1/bin/:$PATH"
 # PATHS=(
 #     "$HOME/bin/"
