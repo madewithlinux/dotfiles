@@ -1,7 +1,7 @@
 # (c) Copyright 2018 Josh Wright
 # bashrc
 
-if [[ "$MARKER_BASH_PROFILE" != "2" ]]; then
+if [[ "$MARKER_BASH_PROFILE" != "3" ]]; then
     . "$HOME/.bash_profile"
 fi
 # If not running interactively, don't do anything
@@ -154,11 +154,7 @@ remove_detached_tmux() {
 # (because terminals are weird)
 COLOR_RED_BOLD="\[\e[1;33m\]"
 # COLOR_BG="\[\e[48;5;252m\]"
-if [[ "$(hostname)" == "j0sh-ThinkPad-T450s" ]]; then
-    COLOR_BG="\[\e[47m\]"
-else
-    COLOR_BG="\[\e[48;5;237m\]"
-fi
+COLOR_BG="\[\e[48;5;237m\]"
 COLOR_TIME="\[\e[1;32m\]"
 if [[ "$USER" == "root" ]]; then
     COLOR_USER="\[\e[1;31m\]"
