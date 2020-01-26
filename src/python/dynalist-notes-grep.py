@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-# finds all files below CWD, recursively, 
+# finds all text files below CWD, recursively, and print a breadcrumbs-style map of
+# the contents of the file. Assumes the file is indented with tabs
 
 import sys, os
 
