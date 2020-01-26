@@ -1,0 +1,2 @@
+ATTRS{idVendor}=="239a", ATTRS{idProduct}=="8034", GROUP="plugdev", TAG+="uaccess"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="239a", ATTRS{idProduct}=="8034", ATTRS{serial}=="CB4F40535364933502020233A19310FF", SYMLINK+="edgebadge"
