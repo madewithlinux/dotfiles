@@ -32,6 +32,7 @@ export PATH="$PATH:/sbin:/usr/sbin"
 export PATH="$HOME/.local/bin/:$PATH"
 export PATH="/opt/cmake/bin:$PATH"
 export PATH="$HOME/.npm/bin/:$PATH"
+export PATH="$HOME/bin/:$PATH"
 # export PATH="/opt/ghc/8.0.1/bin/:$PATH"
 # PATHS=(
 #     "$HOME/bin/"
