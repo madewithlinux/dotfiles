@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-CODE=$(ls -1 $HOME/Applications/VSCodium* |head -n1)
+CODE=$(ls -1 $HOME/Applications/VSCodium* |sort -r |head -n1)
 exec "$CODE" "$@"
 

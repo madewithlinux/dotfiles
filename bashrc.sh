@@ -13,8 +13,8 @@ HISTCONTROL=ignoredups:ignorespace
 # append to the history file, don't overwrite it
 shopt -s histappend
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=50000
-HISTFILESIZE=50000
+HISTSIZE=500000
+HISTFILESIZE=500000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -26,11 +26,18 @@ shopt -s globstar
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# enable vte terminal features for tilix, such as working directory integration
+if [ $TILIX_ID ] || [ $VTE_VERSION ] ; then source /etc/profile.d/vte.sh; fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
+  fi
 fi
 # tab-completion:
 if [[ -f "$HOME/Dropbox/.tmux.completion.bash.txt" ]]; then
