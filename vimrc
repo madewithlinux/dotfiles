@@ -16,6 +16,9 @@ syntax on
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" https://twitter.com/chordbug/status/1260649460612206594?s=19
+nmap q: :q
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
