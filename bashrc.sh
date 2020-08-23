@@ -1,7 +1,7 @@
-# (c) Copyright 2018 Josh Wright
+# (c) Copyright 2020 Josh Wright
 # bashrc
 
-if [[ "$MARKER_BASH_PROFILE" != "3" ]]; then
+if [[ "$MARKER_BASH_PROFILE" != "4" ]]; then
     . "$HOME/.bash_profile"
 fi
 # If not running interactively, don't do anything
@@ -27,7 +27,10 @@ shopt -s globstar
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # enable vte terminal features for tilix, such as working directory integration
-if [ $TILIX_ID ] || [ $VTE_VERSION ] ; then source /etc/profile.d/vte.sh; fi
+if [ $TILIX_ID ] || [ $VTE_VERSION ] ; then
+   [[ -f '/etc/profile.d/vte.sh' ]] && source /etc/profile.d/vte.sh
+   [[ -f '/etc/profile.d/vte-2.91.sh' ]] && source /etc/profile.d/vte-2.91.sh
+fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile

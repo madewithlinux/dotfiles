@@ -1,8 +1,8 @@
-# (c) Copyright 2017 Josh Wright
+# (c) Copyright 2020 Josh Wright
 # bash_profile
 
 # convenience marker so we can make sure this file has been sourced
-MARKER_BASH_PROFILE=3
+MARKER_BASH_PROFILE=4
 
 ###############
 ## functions ##
@@ -68,6 +68,8 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.go/bin:$PATH"
+export PATH=$PATH:/usr/local/go/bin
 
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 # if [ -e /home/j0sh/.nix-profile/etc/profile.d/nix.sh ]; then . /home/j0sh/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
