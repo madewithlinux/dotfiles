@@ -24,7 +24,8 @@ keys_to_keep = {
     '/xfwm4/custom/<Alt>F10',
 }
 
-def find_duplicate_mappings():
+
+def find_duplicate_mappings(*, fix=False):
     all_keys = xfconf_query(channel='xfce4-keyboard-shortcuts', list=True)
     key_values = []
     for key in all_keys:
@@ -48,8 +49,9 @@ def find_duplicate_mappings():
             continue
         keys_to_remove = keys - keys_to_keep
         print(f'{value}: {", ".join(keys_to_remove)}')
-        # for key_to_remove in keys_to_remove:
-        #     xfconf_query(channel='xfce4-keyboard-shortcuts', property=key_to_remove, reset=True).strip()
+        if fix:
+            for key_to_remove in keys_to_remove:
+                xfconf_query(channel='xfce4-keyboard-shortcuts', property=key_to_remove, reset=True).strip()
 
 
 def set_preferred_mappings():
