@@ -1,7 +1,7 @@
 # (c) Copyright 2020 Josh Wright
 # bashrc
 
-if [[ "$MARKER_BASH_PROFILE" != "5" ]]; then
+if [[ "$MARKER_BASH_PROFILE" != "7" ]]; then
     . "$HOME/.bash_profile"
 fi
 # If not running interactively, don't do anything
@@ -46,6 +46,9 @@ fi
 if [[ -f "$HOME/Dropbox/.tmux.completion.bash.txt" ]]; then
     source "$HOME/Dropbox/.tmux.completion.bash.txt"
 fi
+if [[ -f "/usr/local/etc/bash_completion.d/deno.bash" ]]; then
+    source "/usr/local/etc/bash_completion.d/deno.bash"
+fi
 
 complete -cf sudo
 complete -cf man
@@ -65,7 +68,7 @@ alias htop='htop -d 10'
 alias ncdu='ncdu -x'
 alias pstree='pstree -U'
 binary_exists subl3 && alias subl='subl3'
-alias mpv='/usr/bin/mpv --hwdec=auto --profile=pseudo-gui --save-position-on-quit --cache=3145728 --input-unix-socket=/tmp/mpvsocket --ytdl-format=bestvideo+bestaudio'
+# alias mpv='/usr/bin/mpv --hwdec=auto --profile=pseudo-gui --save-position-on-quit --cache=3145728 --input-unix-socket=/tmp/mpvsocket --ytdl-format=bestvideo+bestaudio'
 alias ecryptfs='sudo mount -t ecryptfs -o ecryptfs_enable_filename_crypto=y,ecryptfs_cipher=aes,ecryptfs_key_bytes=32'
 alias sensors='sensors -f'
 alias mounted='mount|column -t'
@@ -198,7 +201,17 @@ if type module > /dev/null 2>&1; then
     module load use.own
 fi
 source_if_exists "$HOME/.bashrc_local"
+source_if_exists "$HOME/.just.bash"
 
 export FZF_COMPLETION_TRIGGER='~~'
 export FZF_DEFAULT_OPTS='--bind ctrl-d:page-down,ctrl-u:page-up'
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# added by travis gem
+[ ! -s /home/j0sh/.travis/travis.sh ] || source /home/j0sh/.travis/travis.sh
+
+PATH=$PATH:/home/j0sh/Applications/010Editor;export PATH; # ADDED BY INSTALLER - DO NOT EDIT OR DELETE THIS COMMENT - 87FF8EFC-483D-BCAA-D67D-735CF60410D1 C457BCDB-5EE4-2D8E-FDD6-571893CC3981
+
+export PATH=$PATH:/home/j0sh/.platformio/penv/bin/
+
+

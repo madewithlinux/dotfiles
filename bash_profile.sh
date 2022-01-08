@@ -2,7 +2,7 @@
 # bash_profile
 
 # convenience marker so we can make sure this file has been sourced
-MARKER_BASH_PROFILE=5
+MARKER_BASH_PROFILE=7
 
 ###############
 ## functions ##
@@ -32,6 +32,7 @@ export PATH="$PATH:/sbin:/usr/sbin"
 export PATH="$HOME/.local/bin/:$PATH"
 export PATH="/opt/cmake/bin:$PATH"
 export PATH="$HOME/.npm/bin/:$PATH"
+export PATH="$HOME/.npm-global/bin/:$PATH"
 export PATH="$HOME/bin/:$PATH"
 # export PATH="/opt/ghc/8.0.1/bin/:$PATH"
 # PATHS=(
@@ -78,3 +79,7 @@ export PATH="$HOME/gems/bin:$PATH"
 # if [ -e /home/j0sh/.nix-profile/etc/profile.d/nix.sh ]; then . /home/j0sh/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 source_if_exists ~/bin/_just.bash
+
+
+export DENO_INSTALL="/home/j0sh/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"

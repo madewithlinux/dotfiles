@@ -10,7 +10,6 @@ filename_prefix = '///'
 import os
 import sys
 import os.path as path
-from pyperclip import copy, paste
 
 def quote_for_posix(string):
     """
@@ -21,18 +20,26 @@ def quote_for_posix(string):
 if len(sys.argv) > 1:
     files = sys.argv[1:]
 else:
+    from pyperclip import paste
     files = paste().split('\n')
 
+files = sorted(files)
 fullpaths = [quote_for_posix(path.abspath(f))  for f in files]
 basenames = [quote_for_posix(path.basename(f)) for f in files]
 maxlen = max(len(f) for f in fullpaths)
 
-copy(header + '\n' + '\n'.join(
+
+content = (header + '\n' + '\n'.join(
     move + 
     fp.ljust(maxlen+1) +
     filename_prefix +
     b
     for (fp, b) in zip(fullpaths, basenames)
-    )
-)
+))
+try:
+    from pyperclip import copy
+    copy(content)
+except:
+    print(content)
+    print('# failed to import pyperclip')
 
