@@ -1,4 +1,4 @@
-# (c) Copyright 2020 Josh Wright
+# (c) Copyright 2021 Josh Wright
 # bashrc
 
 if [[ "$MARKER_BASH_PROFILE" != "7" ]]; then
@@ -162,39 +162,26 @@ remove_detached_tmux() {
 ##################
 ## Prompt Stuff ##
 ##################
-# the actual powerline script causes tiny but noticeable lag for me
-# must wrap escape colors inside \[\] or else the current line doesn't wrap to the next one correctly
-# (because terminals are weird)
-COLOR_RED_BOLD="\[\e[1;33m\]"
-# COLOR_BG="\[\e[48;5;252m\]"
-COLOR_BG="\[\e[48;5;237m\]"
-COLOR_TIME="\[\e[1;32m\]"
-if [[ "$USER" == "root" ]]; then
-    COLOR_USER="\[\e[1;31m\]"
-else
-    COLOR_USER="\[\e[1;34m\]"
-fi
-COLOR_PATH="\[\e[1;35m\]"
-COLOR_NONE="\[\e[0m\]"
-PS1="${COLOR_USER}\u${COLOR_RED_BOLD}@${COLOR_USER}\h${COLOR_PATH}\W${COLOR_NONE}${POWERLINE_ARROW}${COLOR_NONE} "
-PS1_static=$PS1
-function _prompt_command() {
-    if type __vte_prompt_command >/dev/null 2>&1; then
-      __vte_prompt_command
-    fi
-    if [[ -n $VIRTUAL_ENV ]]; then
-      # in virtual env
-      PS1="${COLOR_BG}${COLOR_TIME}$(date +%I:%M%p)${COLOR_USER}\u${COLOR_RED_BOLD}@${COLOR_USER}\h${COLOR_PATH}\W${COLOR_USER}*${COLOR_NONE} "
-    else
-      PS1="${COLOR_BG}${COLOR_TIME}$(date +%I:%M%p)${PS1_static}"
-    fi
-    if [[ $__USER_SET_TITLE == 0 ]]; then
-        # title "$USER@$(hostname):$(basename $(pwd))"
-        title "$(basename "$(pwd)")"
-        __USER_SET_TITLE=0
-    fi
-}
-PROMPT_COMMAND=_prompt_command
+# must wrap escape colors inside \[\] or else the current line doesn't wrap to the next one correctly (because terminals are weird)
+RED="\[\e[31m\]"
+GREEN="\[\e[32m\]"
+YELLOW="\[\e[33m\]"
+BLUE="\[\e[34m\]"
+PINK="\[\e[35m\]"
+CYAN="\[\e[36m\]"
+RESET="\[\e(B\e[m\]"
+
+PS1="${RESET}"\
+'\`#'\
+"${GREEN}\t"\
+"${BLUE}\u${YELLOW}@${BLUE}\h"\
+"${PINK}\w"\
+"\${VIRTUAL_ENV:+${GREEN}*}"\
+"${RED}\${?/#0/}"\
+"${RESET}"\
+'\`; '
+PS2='\`#\` '
+
 
 source_if_exists "/usr/share/modules/init/bash"
 if type module > /dev/null 2>&1; then
