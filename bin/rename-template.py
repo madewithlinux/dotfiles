@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 from pathlib import Path
 from typing import List, Dict, Tuple, Optional
 import sys
@@ -9,15 +8,32 @@ import argparse
 import re
 
 
+filename_matcher_lowercase = re.compile(r'^[a-z0-9\.]+\.((19|20)\d{2}\.|s\d{2}e\d{2}\.|(480|720|1080)p\.)+')
 filename_matcher = re.compile(r'^[A-Za-z0-9\.]+\.((19|20)\d{2}\.|S\d{2}E\d{2}\.|(480|720|1080)p\.)+')
+filename_matcher_spaces = re.compile(r'^[A-Za-z0-9 ]+ ((19|20)\d{2} |S\d{2}E\d{2} |(480|720|1080)p )+')
 
 
 def try_fix_filename(filename: str) -> Optional[str]:
+    m = filename_matcher_lowercase.search(filename)
+    if m:
+        name = m.group()
+        name = name.rstrip('.').replace('.', ' ')
+        name = (name
+                .title()
+                .replace('480P', '480p')
+                .replace('720P', '720p')
+                .replace('1080P', '1080p')
+                )
+        return name + Path(filename).suffix
     m = filename_matcher.search(filename)
     if m:
         name = m.group()
-        name = (name.rstrip('.')
-                .replace('.', ' '))
+        name = name.rstrip('.').replace('.', ' ')
+        return name + Path(filename).suffix
+    m = filename_matcher_spaces.search(filename)
+    if m:
+        name = m.group()
+        name = name.rstrip(' ')
         return name + Path(filename).suffix
     else:
         return None
@@ -53,6 +69,10 @@ example usage:
     parser.add_argument('--exclude', '-e', help='regex matching files to exclude')
     parser.add_argument('--auto', '-a', action='store_true', help='attempt to automatically rename files')
     parser.add_argument('--output', '-o', required=False, help='output folder')
+    parser.add_argument(
+        '--execute', '-x', required=False, action='store_true',
+        help='link the files instead of printing the output (implies -a/--auto, requires -o/--output)')
+    parser.add_argument('--verbose', '-v', required=False, action='store_true', default=False)
 
     parser.add_argument(
         '--header',
@@ -100,6 +120,8 @@ def make_quoted_pairs(
     output_path = None
     if output_folder:
         output_path = Path(output_folder)
+        # skip files that are in the output path
+        paths = [p for p in paths if output_path not in p.parents]
 
     if auto_rename:
         pairs = []
@@ -125,6 +147,30 @@ def make_quoted_pairs(
     if sort:
         pairs = sorted(pairs)
     return pairs
+
+
+def execute_auto_rename(paths: List[Path], output_folder: str, verbose=False):
+    cwd = Path('.').absolute()
+    paths = [p.absolute().relative_to(cwd) for p in paths]
+    output_path = Path(output_folder)
+    # skip files that are in the output path
+    paths = [p for p in paths if output_path not in p.parents]
+    # print(paths)
+    for p in paths:
+        name = try_fix_filename(p.name)
+        if not name:
+            if verbose:
+                print(f'# cannot parse {p}')
+            continue
+        dest = output_path / name
+        if not dest.exists():
+            print(f'{p} -> {dest}')
+            os.link(p, dest)
+        elif p.samefile(dest):
+            continue
+        else:
+            if verbose:
+                print(f'skip {p} -> {dest}')
 
 
 def make_content(quoted_pairs, header, cmd, prefix) -> str:
@@ -164,6 +210,13 @@ def main():
     if args.recursive:
         input_paths = recurse_paths(input_paths)
     input_paths = filter_paths(input_paths, args.include, args.exclude)
+
+    if args.execute and args.output:
+        execute_auto_rename(input_paths, args.output, verbose=args.verbose)
+        exit(0)
+    elif args.execute and not args.output:
+        print('error: --execute requires --output')
+        exit(1)
 
     quoted_pairs = make_quoted_pairs(
         input_paths,
