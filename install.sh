@@ -3,13 +3,14 @@
 # ideal for curl|bash
 
 # start actual items at index 1 because that's easier for selecting from
-ITEMS=("" bashrc inputrc tmux.conf)
+ITEMS=("" bashrc bash_profile inputrc tmux.conf)
 ITEM_URLS=("" \
-    "https://raw.githubusercontent.com/Joshua-Wright/dotfiles/master/bashrc" \
-    "https://raw.githubusercontent.com/Joshua-Wright/dotfiles/master/inputrc" \
-    "https://raw.githubusercontent.com/Joshua-Wright/dotfiles/master/tmux.conf" \
+    "https://raw.githubusercontent.com/madewithlinux/dotfiles/master/bashrc.sh" \
+    "https://raw.githubusercontent.com/madewithlinux/dotfiles/master/bash_profile.sh" \
+    "https://raw.githubusercontent.com/madewithlinux/dotfiles/master/inputrc" \
+    "https://raw.githubusercontent.com/madewithlinux/dotfiles/master/tmux.conf" \
 )
-ITEM_PATHS=("" "$HOME/.bashrc" "$HOME/.inputrc" "$HOME/.tmux.conf")
+ITEM_PATHS=("" "$HOME/.bashrc" "$HOME/.bash_profile" "$HOME/.inputrc" "$HOME/.tmux.conf")
 
 count=1
 for item in ${ITEMS[*]}; do

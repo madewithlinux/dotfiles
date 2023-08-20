@@ -1,4 +1,4 @@
-origin: git@github.com:Joshua-Wright/image_stuff.git
+origin: git@github.com:madewithlinux/image_stuff.git
 HEAD: 75987372ca4888681ff0f7b39857ae231d8f6050
 diff --git a/go/main/dragon_curve.go b/go/main/dragon_curve.go
 index 1a8142a..5f0dc28 100644

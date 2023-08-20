@@ -11,3 +11,4 @@ Session.vim
 .stack-work/
 *.swp
 a.out
+.history/
