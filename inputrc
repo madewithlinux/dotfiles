@@ -1,7 +1,6 @@
-# (c) Copyright 2014 Josh Wright
 # reload this file using  bind -f ~/.inputrc
 
-# enable Alt-arrows 
+# enable Alt-arrows
 "\e[1;3D": backward-word ### Alt left
 "\e[1;3C": forward-word ### Alt right
 

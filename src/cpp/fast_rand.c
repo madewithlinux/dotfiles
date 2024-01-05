@@ -1,4 +1,3 @@
-// (c) Copyright 2017 Josh Wright
 #include <stdlib.h>
 #include <time.h>
 #include <stdint.h>

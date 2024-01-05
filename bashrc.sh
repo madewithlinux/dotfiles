@@ -1,4 +1,3 @@
-# (c) Copyright 2021 Josh Wright
 # bashrc
 
 if [[ "$MARKER_BASH_PROFILE" != "7" ]]; then

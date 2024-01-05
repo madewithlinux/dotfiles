@@ -1,4 +1,3 @@
-// (c) Copyright 2015 Josh Wright
 // rename_template.cpp
 // reads copied filenames from stdin, and writes templates to stdout
 // this version aligns the outputs, so they are more readable

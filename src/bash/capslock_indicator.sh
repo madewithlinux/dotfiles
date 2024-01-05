@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# (c) Copyright 2015 Josh Wright
 # relies on power_light being set-uid root
 
 interval="0.1"

@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# (c) Copyright 2015 Josh Wright
 
 import sys, os, hashlib
 

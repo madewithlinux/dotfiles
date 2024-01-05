@@ -1,6 +1,3 @@
-[user]
-	email = madewithlinux.josh@gmail.com
-	name = Josh Wright
 [core]
 	autocrlf = input
 [alias]

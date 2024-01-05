@@ -1,6 +1,3 @@
-# (c) Copyright 2020 Josh Wright
-# bash_profile
-
 # convenience marker so we can make sure this file has been sourced
 MARKER_BASH_PROFILE=7
 

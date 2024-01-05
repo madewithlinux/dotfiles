@@ -1,4 +1,3 @@
-// (c) Copyright 2015 Josh Wright
 // can toggle the power light of my Thinkpad T450s on kernel 4.3.3-ck
 #include <iostream>
 #include <fstream>

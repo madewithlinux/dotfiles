@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# (c) Copyright 2016 Josh Wright
 
 import os,sys, webbrowser
 

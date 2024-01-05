@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop
-# Copyright (c) 2015 Josh Wright
 # This is the script that I use for my tmux status window
 # run "tmux refresh-client -S" to force update the status bar
 # ref: http://tuxdiary.com/2015/09/14/power-battery-status/

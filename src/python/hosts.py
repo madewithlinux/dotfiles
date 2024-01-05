@@ -1,6 +1,5 @@
 #!/usr/bin/env pypy3
 #!/usr/bin/env python3
-# (c) Copyright 2015 Josh Wright
 
 import urllib.request
 import os

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# (c) Copyright 2015 Josh Wright
 import datetime,sys
 range_length = int(sys.argv[1])
 

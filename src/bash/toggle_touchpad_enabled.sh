@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# (c) Copyright 2015 Josh Wright
 
 touchpad_name="SynPS/2 Synaptics TouchPad"
 

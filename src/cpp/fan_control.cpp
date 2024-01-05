@@ -1,4 +1,3 @@
-// (c) Copyright 2015 Josh Wright
 // controls the fan speed on my Thinkpad T450s
 // (may or may not work on yours)
 #include <iostream>
