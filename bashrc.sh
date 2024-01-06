@@ -56,7 +56,7 @@ complete -cf man
 ## basics ##
 ############
 alias grep='grep --color=auto'
-alias dstat='dstat -cdnmD sda,sdb,sdc,sdd,sde,sdf,sdg,sdh,sdi,sdj,sdk,sdl,sdm,sdl,sdo,sdp,sr0,mmcblk0p1,nvme0n1'
+alias dstat='dstat -cmndgyD sda,sdb,sdc,sdd,sde,sdf,sdg,sdh,sdi,sdj,sdk,sdl,sdm,sdl,sdo,sdp,sr0,mmcblk0p1,nvme0n1'
 alias lsblk='lsblk --output NAME,MODEL,LABEL,SIZE,TYPE,FSTYPE,MOUNTPOINT,UUID'
 alias ls='ls --color=auto'
 alias ll='ls -lFh --color=auto'
@@ -71,7 +71,7 @@ binary_exists subl3 && alias subl='subl3'
 alias ecryptfs='sudo mount -t ecryptfs -o ecryptfs_enable_filename_crypto=y,ecryptfs_cipher=aes,ecryptfs_key_bytes=32'
 alias sensors='sensors -f'
 alias mounted='mount|column -t'
-alias exxit='kill -9 $$' # exit without writing history 
+alias exxit='kill -9 $$' # exit without writing history
 alias newmac='sudo macchanger -r wlp3s0 -b' # assign the wifi card a new random MAC address
 alias empty_trash='rm -rf ~/.local/share/Trash/'
 alias copy='xsel -ib'
