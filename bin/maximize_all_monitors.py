@@ -46,6 +46,10 @@ if "firefox_firefox" in wm_class_ret:
 	x = -50
 	margin_x = -100
 	margin_y = -49
+elif "google-chrome" in wm_class_ret:
+	# ugly hack to fix chrome
+	margin_x = -1
+	margin_y = 50
 
 full_width -= margin_x
 full_height -= margin_y
